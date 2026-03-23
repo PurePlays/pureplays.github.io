@@ -3,205 +3,411 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PurePlays - Smart Money, Side Hustles</title>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+  <meta name="description" content="PurePlays is a clean top-of-funnel hub for mainstream platforms often discussed in side-income communities, with space for your referral links.">
+  <title>PurePlays | Referral Hub & Platform Directory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --text: #17202a;
+      --muted: #4d5b6a;
+      --brand: #12355b;
+      --brand-2: #2c7be5;
+      --accent: #f4b942;
+      --border: #e3e8ef;
+      --ok: #0f766e;
+      --radius: 14px;
+    }
+
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Merriweather', serif;
-      background-color: #f8f9fa;
-      color: #212529;
-      line-height: 1.8;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    header {
-      background: url('/mnt/data/logo.PNG') no-repeat center center/cover;
-      color: #ffffff;
+    a { color: var(--brand-2); }
+
+    .hero {
+      background: linear-gradient(135deg, #0d2a47, #1d4f8f);
+      color: #fff;
+      padding: 64px 20px 48px;
       text-align: center;
-      padding: 120px 20px;
-      position: relative;
     }
 
-    header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(29, 53, 87, 0.6);
-      z-index: 1;
-    }
-
-    header h1, header p, .logo {
-      position: relative;
-      z-index: 2;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-
-    header p {
-      font-size: 1.3rem;
-      color: #E0E0E0;
-      font-style: italic;
-    }
+    .hero-inner { max-width: 1040px; margin: 0 auto; }
 
     .logo {
-      width: 100px;
-      height: auto;
-      margin: 0 auto 20px;
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.1);
+      padding: 12px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      line-height: 1.1;
+      margin-bottom: 8px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,0.9);
+      max-width: 740px;
+      margin: 0 auto 24px;
+      font-size: 1.05rem;
+    }
+
+    .hero-cta-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); opacity: 0.95; }
+    .btn-primary { background: var(--accent); color: #17202a; }
+    .btn-secondary {
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
     }
 
     nav {
-      background: #F8F9FA;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 15px 0;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
     }
 
-    nav a {
-      color: #1D3557;
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-inner a {
       text-decoration: none;
-      font-weight: 700;
-      padding: 8px 16px;
-      border-radius: 5px;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    nav a:hover {
-      background: #E9C46A;
-      color: #1D3557;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #ffffff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: var(--brand);
+      font-weight: 600;
+      padding: 6px 10px;
       border-radius: 8px;
+    }
+
+    .nav-inner a:hover,
+    .nav-inner a:focus-visible {
+      background: #e8f0ff;
+      outline: none;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 26px auto 60px;
+      padding: 0 20px;
     }
 
     section {
-      margin-bottom: 40px;
+      margin-bottom: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(18, 53, 91, 0.05);
     }
 
-    h2 {
-      font-size: 2rem;
-      color: #1D3557;
-      margin-bottom: 15px;
-      font-weight: 700;
+    h2 { color: var(--brand); font-size: 1.5rem; margin-bottom: 8px; }
+    h3 { color: var(--brand); }
+
+    .section-note {
+      color: var(--muted);
+      margin-bottom: 16px;
     }
 
-    p, li {
-      margin-bottom: 15px;
-      font-size: 1.1rem;
+    .cards {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      margin-top: 10px;
     }
 
-    ul {
-      list-style-type: disc;
-      padding-left: 20px;
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      background: #fbfdff;
     }
 
-    .cta {
+    .card h3 { font-size: 1.03rem; margin-bottom: 6px; }
+    .card p { color: var(--muted); margin-bottom: 10px; font-size: 0.95rem; }
+
+    .link-pill {
       display: inline-block;
-      background: #E9C46A;
-      color: #1D3557;
-      padding: 12px 24px;
       text-decoration: none;
       font-weight: 700;
-      border-radius: 8px;
-      transition: background 0.3s;
+      color: var(--ok);
+      border: 1px solid #b7e3dc;
+      background: #effcf9;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.9rem;
     }
 
-    .cta:hover {
-      background: #1D3557;
-      color: #ffffff;
+    .directory {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+
+    .directory th,
+    .directory td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .directory th {
+      background: #f0f5ff;
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    .disclaimer {
+      font-size: 0.92rem;
+      color: var(--muted);
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin-top: 14px;
+    }
+
+    .email-block {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #f8fbff;
+    }
+
+    .email-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .email-form input {
+      flex: 1 1 260px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #cfd8e3;
+      font: inherit;
+    }
+
+    .email-form button {
+      border: none;
+      cursor: pointer;
+      background: var(--brand-2);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .analytics-shot {
+      margin-top: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .analytics-shot img {
+      width: 100%;
+      display: block;
+      height: auto;
     }
 
     footer {
-      background: #1D3557;
-      color: #ffffff;
       text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
       padding: 20px;
-      font-style: italic;
     }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
-
-      nav {
-        flex-direction: column;
-        gap: 10px;
-      }
+    @media (max-width: 560px) {
+      .hero { padding-top: 48px; }
+      section { padding: 18px; }
+      .directory { font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="PurePlays brand logo featuring praying hands" class="logo">
-    <p>Smart Money. Side Hustles. Financial Freedom Starts Here.</p>
+  <header class="hero">
+    <div class="hero-inner">
+      <img src="logo.png" alt="PurePlays logo" class="logo">
+      <h1>PurePlays</h1>
+      <p>Use this hub as your top-of-funnel page so visitors get context before they click any referral offer.</p>
+      <div class="hero-cta-wrap">
+        <a class="btn btn-primary" href="#top-picks">See Top 3 Picks</a>
+        <a class="btn btn-secondary" href="#directory">Browse Full Directory</a>
+      </div>
+    </div>
   </header>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#sweeps-casinos">Sweeps Casinos</a>
-    <a href="#cashback-apps">Cashback Apps</a>
-    <a href="#reselling">Reselling</a>
-    <a href="#bank-bonuses">Bank Bonuses</a>
-    <a href="#contact">Contact</a>
+  <nav aria-label="Primary">
+    <div class="nav-inner">
+      <a href="#about">About</a>
+      <a href="#top-picks">Top Picks</a>
+      <a href="#directory">Reference Directory</a>
+      <a href="#funnel">Email Funnel</a>
+      <a href="#contact">Contact</a>
+    </div>
   </nav>
 
-  <div class="container">
+  <main>
     <section id="about">
-      <h2>Welcome to PurePlays</h2>
-      <p>PurePlays is your go-to resource for discovering profitable side hustles and smart money strategies. We help you unlock income opportunities that actually work.</p>
+      <h2>Community-Style Reference Hub</h2>
+      <p class="section-note">This page is built to organize commonly discussed mainstream platforms in one place instead of posting raw links in DMs or comments.</p>
+      <p>This is <strong>not</strong> an endorsement or earnings promise. Keep language realistic: these are commonly mentioned options, not guaranteed opportunities. Always verify current terms directly on each platform before signing up or sharing personal information.</p>
     </section>
 
-    <section id="sweeps-casinos">
-      <h2>Sweeps Casinos</h2>
-      <p>Engage with online sweepstakes casinos to earn rewards without monetary investment.</p>
+    <section id="top-picks">
+      <h2>Top Picks (Pin Your 3 Best Converters)</h2>
+      <p class="section-note">Place your highest-converting referral offers here first for stronger click focus.</p>
+      <div class="cards">
+        <article class="card">
+          <h3>Top Pick #1: Stake.us</h3>
+          <p>Mainstream sweeps option with frequent mentions and daily-claim style interest.</p>
+          <a class="link-pill" href="https://example.com/your-stake-us-referral" target="_blank" rel="noopener noreferrer">Add Your Referral Link</a>
+        </article>
+        <article class="card">
+          <h3>Top Pick #2: Freecash</h3>
+          <p>Popular rewards platform for offerwalls, surveys, and tasks.</p>
+          <a class="link-pill" href="https://example.com/your-freecash-referral" target="_blank" rel="noopener noreferrer">Add Your Referral Link</a>
+        </article>
+        <article class="card">
+          <h3>Top Pick #3: Swagbucks</h3>
+          <p>Long-running rewards app/site frequently used as a beginner starting point.</p>
+          <a class="link-pill" href="https://example.com/your-swagbucks-referral" target="_blank" rel="noopener noreferrer">Add Your Referral Link</a>
+        </article>
+      </div>
     </section>
 
-    <section id="cashback-apps">
-      <h2>Cashback Websites & Apps</h2>
-      <p>Utilize platforms that offer cashback for purchases to save money effortlessly.</p>
+    <section id="directory">
+      <h2>[OFFICIAL] Community Reference Thread — Mainstream Sites Frequently Mentioned Here</h2>
+      <p class="section-note">This section is intentionally framed as a reference list for known mainstream options and scam-avoidance context.</p>
+      <p>The goal is to document safer, more established alternatives to random links, fake accounts, fake payment setups, and off-platform pitches. If users report repeated issues with any listed platform, update this page accordingly.</p>
+
+      <h3>Core Platforms</h3>
+      <table class="directory">
+        <thead>
+          <tr><th>Platform</th><th>Category</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Stake.us</td><td>Sweeps</td><td>Popular daily-bonus platform</td></tr>
+          <tr><td>SpinQuest</td><td>Sweeps</td><td>Common daily-collector option</td></tr>
+          <tr><td>Crown Coins</td><td>Sweeps</td><td>Frequently mentioned recurring-freebie site</td></tr>
+          <tr><td>Fortune Coins</td><td>Sweeps</td><td>Known for streak-style rewards</td></tr>
+          <tr><td>Shuffle.us</td><td>Sweeps</td><td>Common secondary sweeps option</td></tr>
+          <tr><td>Winna.com</td><td>Crypto</td><td>VIP/status-match angle</td></tr>
+          <tr><td>Stake.com</td><td>Crypto</td><td>Crypto/VIP-focused option</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:16px;">Other Sweeps / Casino Platforms</h3>
+      <table class="directory">
+        <thead>
+          <tr><th>Platform</th><th>Category</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>American Luck</td><td>Sweeps</td><td>Related family site</td></tr>
+          <tr><td>LuckParty</td><td>Sweeps</td><td>Related family site</td></tr>
+          <tr><td>High 5 Casino</td><td>Sweeps</td><td>Established social-casino option</td></tr>
+          <tr><td>LuckyBitsVegas</td><td>Sweeps/Crypto-style</td><td>Alternate platform with different games</td></tr>
+          <tr><td>Spin Pals</td><td>Sweeps</td><td>Secondary daily-bonus site</td></tr>
+          <tr><td>Sweep Jungle</td><td>Sweeps</td><td>Daily wheel style site</td></tr>
+          <tr><td>Sixty6</td><td>Sweeps</td><td>Daily-reward site</td></tr>
+          <tr><td>Gains.com</td><td>Sweeps</td><td>Supplemental daily site</td></tr>
+          <tr><td>LuckySlots</td><td>Sweeps</td><td>Secondary daily-bonus option</td></tr>
+          <tr><td>Golden Hearts Games</td><td>Charity/Sweeps</td><td>Different niche angle</td></tr>
+          <tr><td>ACE.com</td><td>Sweeps</td><td>Clean signup path</td></tr>
+          <tr><td>SheeshCasino</td><td>Sweeps</td><td>Secondary option</td></tr>
+          <tr><td>Legendz</td><td>Sweeps</td><td>Secondary option</td></tr>
+          <tr><td>GetZoot</td><td>Sweeps</td><td>Secondary option</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:16px;">Other Mainstream Money-Making Platforms</h3>
+      <table class="directory">
+        <thead>
+          <tr><th>Platform</th><th>Category</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Swagbucks</td><td>Rewards</td><td>Surveys, offers, cashback</td></tr>
+          <tr><td>Scrambly</td><td>Rewards</td><td>Offerwall/tasks/games</td></tr>
+          <tr><td>Freecash</td><td>Rewards</td><td>Offerwalls, surveys, games</td></tr>
+          <tr><td>KashKick</td><td>Rewards</td><td>Offers, surveys, paid tasks</td></tr>
+        </tbody>
+      </table>
+
+      <p class="disclaimer"><strong>Important:</strong> Use this as a starting point, not blind trust. Be cautious with unusual payment requests, off-platform contact, or inconsistent verification flows. If repeated problems show up in user reports, that matters more than platform marketing.</p>
     </section>
 
-    <section id="reselling">
-      <h2>Reselling</h2>
-      <p>Buy and sell items to generate profit through various online marketplaces.</p>
-    </section>
+    <section id="funnel">
+      <h2>Email Block for Repeat Visitors</h2>
+      <p class="section-note">Use this block to collect returning traffic and distribute updates when offers change.</p>
+      <div class="email-block">
+        <p><strong>Get weekly updates:</strong> new platform notes, offer changes, and top pick updates.</p>
+        <form class="email-form" action="#" method="post">
+          <input type="email" name="email" placeholder="Enter your email" aria-label="Email address">
+          <button type="submit">Join List</button>
+        </form>
+        <p class="disclaimer">Connect this form to your email provider (ConvertKit, Beehiiv, Mailchimp, etc.) by replacing the <code>action</code> URL.</p>
+      </div>
 
-    <section id="bank-bonuses">
-      <h2>Bank Bonuses</h2>
-      <p>Take advantage of promotional offers from banks to earn extra income.</p>
+      <div class="analytics-shot">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80" alt="Clean analytics dashboard on a laptop in a dark premium workspace">
+      </div>
+      <p class="section-note" style="margin-top:8px;">Photography via Unsplash.</p>
     </section>
 
     <section id="contact">
-      <h2>Contact Us</h2>
-      <p>Email us at: <strong>contact@pureplays.com</strong></p>
+      <h2>Contact</h2>
+      <p>For partnerships and updates, email <a href="mailto:contact@pureplays.com">contact@pureplays.com</a>.</p>
     </section>
-  </div>
+  </main>
 
   <footer>
-    <p>&copy; 2025 PurePlays. All Rights Reserved.</p>
+    <p>&copy; 2026 PurePlays. All Rights Reserved.</p>
   </footer>
 </body>
 </html>
