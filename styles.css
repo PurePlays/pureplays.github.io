@@ -194,6 +194,14 @@ button {
   padding: 0 30px 70px;
 }
 
+.page-view {
+  display: none;
+}
+
+.page-view.active {
+  display: block;
+}
+
 .hero-section {
   position: relative;
   min-height: 540px;
@@ -275,6 +283,52 @@ button {
   font-size: 0.82rem;
   font-weight: 900;
   box-shadow: var(--shadow-soft);
+}
+
+.home-paths {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 0 44px;
+}
+
+.home-path {
+  display: grid;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 250, 241, 0.74);
+  box-shadow: var(--shadow-soft);
+  padding: 20px;
+}
+
+.home-path.primary {
+  background:
+    radial-gradient(circle at top right, rgba(12, 42, 91, 0.08), transparent 20rem),
+    rgba(255, 250, 241, 0.88);
+  border-color: rgba(12, 42, 91, 0.24);
+}
+
+.home-path span {
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-path strong {
+  color: var(--navy);
+  font-family: var(--serif);
+  font-size: 1.55rem;
+  line-height: 1.05;
+}
+
+.home-path em {
+  color: var(--muted);
+  font-style: normal;
+  font-size: 0.94rem;
+  font-weight: 700;
 }
 
 .trust-row {
@@ -966,6 +1020,7 @@ td {
 
   .trust-row,
   .tool-cards,
+  .home-paths,
   .site-grid,
   .benefit-strip,
   .metric-grid,
@@ -983,6 +1038,11 @@ td {
   }
 
   .tool-cards {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .home-paths {
     padding-left: 0;
     padding-right: 0;
   }

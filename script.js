@@ -1321,8 +1321,44 @@ function bindToolHub() {
   calculatePromoEV();
 }
 
+function showRoute(route, shouldPush = true) {
+  const validRoutes = new Set(["home", "optimizer", "tool-hub", "sites", "save-plan"]);
+  const nextRoute = validRoutes.has(route) ? route : "home";
+
+  document.querySelectorAll(".page-view").forEach((view) => {
+    view.classList.toggle("active", view.id === nextRoute);
+  });
+
+  document.querySelectorAll("[data-route]").forEach((link) => {
+    link.classList.toggle("active", link.dataset.route === nextRoute);
+  });
+
+  if (shouldPush) {
+    history.pushState({ route: nextRoute }, "", `#${nextRoute}`);
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function bindRouting() {
+  document.querySelectorAll("[data-route]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      showRoute(link.dataset.route);
+    });
+  });
+
+  window.addEventListener("popstate", () => {
+    showRoute(location.hash.replace("#", ""), false);
+  });
+
+  const initial = location.hash.replace("#", "");
+  showRoute(initial || "home", false);
+}
+
 document.querySelectorAll(".plan-preset").forEach((button) => {
   button.addEventListener("click", () => applyPlanPreset(button.dataset.planPreset));
 });
 
 document.addEventListener("DOMContentLoaded", bindToolHub);
+document.addEventListener("DOMContentLoaded", bindRouting);

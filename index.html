@@ -25,28 +25,29 @@
       </a>
 
       <div class="nav-center">
-        <a class="nav-link active" href="#home">Home</a>
-        <a class="nav-link" href="#optimizer">Optimizer</a>
-        <a class="nav-link" href="#tool-hub">Tools</a>
-        <a class="nav-link" href="#sites">Sites</a>
+        <a class="nav-link active" href="#home" data-route="home">Home</a>
+        <a class="nav-link" href="#optimizer" data-route="optimizer">Optimizer</a>
+        <a class="nav-link" href="#tool-hub" data-route="tool-hub">Tools</a>
+        <a class="nav-link" href="#sites" data-route="sites">Sites</a>
       </div>
 
       <div class="nav-actions">
-        <a class="sign-in" href="#save-plan">Save Plan</a>
-        <a class="button button-blue nav-cta" href="#optimizer">Get Started <span aria-hidden="true">→</span></a>
+        <a class="sign-in" href="#tool-hub" data-route="tool-hub">Daily Tools</a>
+        <a class="button button-blue nav-cta" href="#optimizer" data-route="optimizer">Get Started <span aria-hidden="true">→</span></a>
       </div>
     </nav>
   </header>
 
-  <main id="home" class="main-shell">
-    <section class="hero-section">
+  <main class="main-shell">
+    <section id="home" class="page-view active">
+      <div class="hero-section">
       <div class="hero-copy">
         <p class="eyebrow">Sweeps + casino value planner</p>
         <h1>Clarity<span>.</span><br>Value<span>.</span><br>Pure Plays<span>.</span></h1>
-        <p>Build a realistic plan for dailies, codes, freebies, AMOE, VIP rewards, giveaways, and good promos without maintaining a giant spreadsheet.</p>
+        <p>Start with one monthly goal. PurePlays tells you which sites and methods are worth focusing on first, then routes you to the real links when they fit your plan.</p>
 
         <div class="hero-buttons">
-          <a class="button button-blue" href="#optimizer">Build My Plan <span aria-hidden="true">→</span></a>
+          <a class="button button-blue" href="#optimizer" data-route="optimizer">Build My Plan <span aria-hidden="true">→</span></a>
           <a class="button button-outline" href="#verified-links"><span class="play" aria-hidden="true">▶</span> Verified Links</a>
         </div>
 
@@ -84,40 +85,28 @@
       <div class="hero-watermark" aria-hidden="true">
         <img src="logo.png" alt="" />
       </div>
+      </div>
+
+      <div class="home-paths" aria-label="PurePlays main paths">
+        <a class="home-path primary" href="#optimizer" data-route="optimizer">
+          <span>Best first step</span>
+          <strong>Build My Plan</strong>
+          <em>Get recommended sites and signup links based on your goal.</em>
+        </a>
+        <a class="home-path" href="#tool-hub" data-route="tool-hub">
+          <span>Return tools</span>
+          <strong>Daily Tools</strong>
+          <em>Checklist, promo EV checker, notes, and verified links.</em>
+        </a>
+        <a class="home-path" href="#sites" data-route="sites">
+          <span>Advanced</span>
+          <strong>Site Database</strong>
+          <em>Edit assumptions only if you want to tune the numbers.</em>
+        </a>
+      </div>
     </section>
 
-    <section class="tool-cards" aria-label="Main PurePlays tool cards">
-      <article class="tool-card mini">
-        <div class="tool-icon" aria-hidden="true">▦</div>
-        <div class="tool-copy">
-          <h2>Profit Optimizer</h2>
-          <p>Set a monthly target and get a breakdown of what it takes to reach it.</p>
-        </div>
-      </article>
-      <article class="tool-card mini">
-        <div class="tool-icon" aria-hidden="true">↗</div>
-        <div class="tool-copy">
-          <h2>Site Priority Ranker</h2>
-          <p>See which casinos are worth time based on monthly value and friction.</p>
-        </div>
-      </article>
-      <article class="tool-card mini">
-        <div class="tool-icon dark" aria-hidden="true">A</div>
-        <div class="tool-copy">
-          <h2>AMOE Value Engine</h2>
-          <p>Estimate mail-in value after postage, supplies, time, and approval rate.</p>
-        </div>
-      </article>
-      <article class="tool-card mini">
-        <div class="tool-icon" aria-hidden="true">$</div>
-        <div class="tool-copy">
-          <h2>Promo EV Checker</h2>
-          <p>Check if a code, reload, or bonus is worth playing before you use it.</p>
-        </div>
-      </article>
-    </section>
-
-    <section id="optimizer" class="optimizer-shell">
+    <section id="optimizer" class="optimizer-shell page-view">
       <div class="section-heading">
         <p class="eyebrow small">Main tool</p>
         <h2>PurePlays Profit Optimizer</h2>
@@ -364,7 +353,7 @@
       </div>
     </section>
 
-    <section id="tool-hub" class="tool-hub-section">
+    <section id="tool-hub" class="tool-hub-section page-view">
       <div class="section-heading compact">
         <p class="eyebrow small">Tool hub</p>
         <h2>Come Back Before You Play</h2>
@@ -456,7 +445,7 @@
       </div>
     </section>
 
-    <section id="sites" class="site-picker-section">
+    <section id="sites" class="site-picker-section page-view">
       <div class="section-heading compact">
         <p class="eyebrow small">Site database</p>
         <h2>Choose sites for the plan</h2>
@@ -474,7 +463,7 @@
       <div id="siteGrid" class="site-grid"></div>
     </section>
 
-    <section id="save-plan" class="benefit-strip" aria-label="Next version features">
+    <section id="save-plan" class="benefit-strip page-view" aria-label="Next version features">
       <article>
         <span class="benefit-icon" aria-hidden="true">◎</span>
         <div>
