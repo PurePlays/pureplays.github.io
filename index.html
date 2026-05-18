@@ -3,52 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="PurePlays is a dark dashboard for sweeps and crypto casino tools, verified referral links, EV calculators, VIP cost checks, and daily claim tracking.">
-  <meta name="theme-color" content="#070b12">
+  <meta name="description" content="PurePlays helps compare sweeps and casino offers with promo EV, offer comparison, AMOE value math, and verified referral links.">
+  <meta name="theme-color" content="#e8ddc7">
   <link rel="canonical" href="https://pureplays.github.io/">
-
-  <meta property="og:title" content="PurePlays | Casino Tools, EV Calculators & Verified Links">
-  <meta property="og:description" content="Check bonus EV, VIP chase cost, redemption timing, daily claims, and verified PurePlays referral links.">
+  <meta property="og:title" content="PurePlays | Promo EV, Offer Math & Verified Links">
+  <meta property="og:description" content="Data-driven promo EV, offer comparison, AMOE value math, and verified PurePlays referral links.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pureplays.github.io/">
-  <title>PurePlays | Casino Tools, EV Calculators & Verified Links</title>
+  <title>PurePlays | Promo EV, Offer Math & Verified Links</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="shell">
+  <div class="background-mark" aria-hidden="true"></div>
+
+  <header class="site-header shell">
     <div class="topbar">
-      <div class="brand">
+      <a class="brand" href="#top" aria-label="PurePlays home">
         <img src="logo.png" alt="PurePlays logo" class="logo">
         <div>
           <strong>PurePlays</strong>
-          <span>Tools, links, and math checks for sweeps + crypto casino players.</span>
+          <span>Promo math, AMOE value, and verified links.</span>
         </div>
-      </div>
-      <nav aria-label="Primary">
-        <a href="#tools" class="nav-link">Tools</a>
-        <a href="#daily" class="nav-link">Daily</a>
-        <a href="#links" class="nav-link">Links</a>
-        <a href="#guide" class="nav-link">Guide</a>
-        <a href="#directory" class="nav-link">Directory</a>
+      </a>
+
+      <nav aria-label="Primary navigation">
+        <a class="nav-link" href="#tools">Tools</a>
+        <a class="nav-link" href="#compare">Compare</a>
+        <a class="nav-link" href="#amoe">AMOE</a>
+        <a class="nav-link" href="#links">Links</a>
+        <a class="nav-link" href="#guide">Guide</a>
       </nav>
     </div>
 
-    <div class="hero">
+    <section id="top" class="hero">
       <div class="hero-copy reveal">
-        <div class="eyebrow">EV calculators + verified referral links</div>
-        <h1>PurePlays</h1>
-        <p>Check whether a bonus, VIP chase, or redemption path is actually worth it before you burn bankroll trying to clear it.</p>
+        <p class="eyebrow">Promo EV + sweeps offer math</p>
+        <h1>Clarity.<br>Value.<br>Pure Plays.</h1>
+        <p class="hero-text">Data-driven tools to analyze promos, compare offers, and calculate whether a sweeps or casino play is actually worth your time.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#tools">Open Calculators</a>
-          <a class="button button-secondary" href="#links">View Verified Links</a>
+          <a class="button button-primary" href="#tools">Explore Tools <span aria-hidden="true">→</span></a>
+          <a class="button button-secondary" href="#links"><span aria-hidden="true">▷</span> Verified Links</a>
+        </div>
+
+        <div class="utility-strip" aria-label="Tool highlights">
+          <div>
+            <span class="mini-icon">◇</span>
+            <strong>Promo EV</strong>
+            <small>True value after playthrough.</small>
+          </div>
+          <div>
+            <span class="mini-icon">□</span>
+            <strong>Offer Compare</strong>
+            <small>Rank offers by net value.</small>
+          </div>
+          <div>
+            <span class="mini-icon">△</span>
+            <strong>AMOE Value</strong>
+            <small>Mail-in cost and hourly math.</small>
+          </div>
         </div>
       </div>
 
       <aside class="hero-panel reveal">
-        <div class="panel-label">Verified links</div>
+        <p class="panel-label">Verified links</p>
         <div class="quick-grid">
           <a class="quick-link" href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">
             <div><strong>Stake.us</strong><span>U.S. sweeps: GC + Stake Cash</span></div>
@@ -64,138 +84,226 @@
           </a>
         </div>
       </aside>
-    </div>
+    </section>
   </header>
 
   <main class="shell">
+    <section class="tool-cards reveal" aria-label="Featured PurePlays tools">
+      <article class="feature-card">
+        <div class="feature-icon">▣</div>
+        <h2>Promo EV Calculator</h2>
+        <p>Calculate the true expected value of a promo after bonus rules, rollover, contribution, rewards, and caps.</p>
+        <ul>
+          <li>Input bonus, deposit, rollover, and terms</li>
+          <li>See EV, expected loss, rewards, and buffer</li>
+          <li>Adjust assumptions instantly</li>
+        </ul>
+        <a class="button button-primary" href="#tools">Open Calculator <span aria-hidden="true">→</span></a>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">⚖</div>
+        <h2>Offer Comparator</h2>
+        <p>Compare multiple offers side by side so you can spot which one is actually best.</p>
+        <ul>
+          <li>Side-by-side EV comparison</li>
+          <li>Normalize offers fairly</li>
+          <li>Spot the real winner</li>
+        </ul>
+        <a class="button button-primary" href="#compare">Compare Offers <span aria-hidden="true">→</span></a>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">A</div>
+        <h2>AMOE Value Check</h2>
+        <p>Estimate mail-in sweepstakes value using postage, supplies, approval rate, time, and monthly volume.</p>
+        <ul>
+          <li>Instant AMOE value math</li>
+          <li>Understand true time/cost impact</li>
+          <li>Make smarter volume decisions</li>
+        </ul>
+        <a class="button button-primary" href="#amoe">Check AMOE <span aria-hidden="true">→</span></a>
+      </article>
+    </section>
+
     <section id="tools" class="reveal">
       <div class="section-head">
         <div>
-          <h2>Tools That Are Actually Useful</h2>
-          <p class="section-note">These calculators do not predict wins. They estimate expected cost, risk, and whether a promo or VIP chase is worth attempting.</p>
+          <h2>Tools With A Real Use Case</h2>
+          <p class="section-note">No seed-prediction nonsense. No generic redemption filler. These tools answer whether an offer is worth your money or your time.</p>
         </div>
-        <p class="notice">This is informational math, not financial or gambling advice. Most casino games are negative EV unless a bonus, promo, rebate, or other edge changes the numbers.</p>
+        <p class="notice">Informational math only. No calculator predicts wins. Most casino games are negative EV unless a bonus, rebate, AMOE credit, or other edge changes the numbers.</p>
       </div>
 
-      <div class="tools-grid">
-        <article class="tool wide">
-          <h3>Bonus EV Calculator</h3>
-          <p>Estimate whether a bonus is worth clearing after playthrough and house edge.</p>
-          <div class="form-grid">
-            <div class="field">
-              <label for="bonusAmount">Bonus amount</label>
-              <input id="bonusAmount" type="number" min="0" step="0.01" value="25">
-            </div>
-            <div class="field">
-              <label for="playthroughMultiple">Playthrough multiple</label>
-              <input id="playthroughMultiple" type="number" min="0" step="0.1" value="1">
-            </div>
-            <div class="field">
-              <label for="bonusHouseEdge">House edge %</label>
-              <input id="bonusHouseEdge" type="number" min="0" step="0.01" value="3">
-            </div>
-            <div class="field">
-              <label for="currentBalance">Current balance</label>
-              <input id="currentBalance" type="number" min="0" step="0.01" value="0">
-            </div>
-            <div class="field">
-              <label for="redemptionMin">Redemption minimum</label>
-              <input id="redemptionMin" type="number" min="0" step="0.01" value="50">
-            </div>
-            <div class="field">
-              <label for="bonusWagerCap">Max comfortable wager</label>
-              <input id="bonusWagerCap" type="number" min="0" step="0.01" value="1">
-            </div>
+      <article class="tool wide">
+        <h3>Promo / Bonus EV Calculator</h3>
+        <p>Use this when a casino or sweeps site advertises a bonus, daily reward, reload, or deposit match.</p>
+        <div class="form-grid">
+          <div class="field">
+            <label for="bonusAmount">Bonus value</label>
+            <input id="bonusAmount" type="number" min="0" step="0.01" value="25">
           </div>
-          <div class="calc-actions">
-            <button type="button" id="calcBonus" class="button button-primary">Calculate Bonus EV</button>
-            <button type="button" class="button button-secondary ghost" data-example="bonus">Load daily-claim example</button>
+          <div class="field">
+            <label for="depositRequired">Deposit required</label>
+            <input id="depositRequired" type="number" min="0" step="0.01" value="0">
           </div>
-          <div class="result" id="bonusResult" aria-live="polite"></div>
-        </article>
-
-        <article class="tool">
-          <h3>VIP Chase Cost Calculator</h3>
-          <p>See the expected cost of wagering toward the next VIP level.</p>
-          <div class="form-grid two">
-            <div class="field">
-              <label for="vipWagerNeeded">Wager needed</label>
-              <input id="vipWagerNeeded" type="number" min="0" step="1" value="10000">
-            </div>
-            <div class="field">
-              <label for="vipHouseEdge">House edge %</label>
-              <input id="vipHouseEdge" type="number" min="0" step="0.01" value="3">
-            </div>
-            <div class="field">
-              <label for="vipRewardRate">Rewards / rakeback %</label>
-              <input id="vipRewardRate" type="number" min="0" step="0.01" value="0.5">
-            </div>
-            <div class="field">
-              <label for="vipBonus">Expected level-up bonus</label>
-              <input id="vipBonus" type="number" min="0" step="0.01" value="0">
-            </div>
+          <div class="field">
+            <label for="playthroughMultiple">Playthrough multiple</label>
+            <input id="playthroughMultiple" type="number" min="0" step="0.1" value="1">
           </div>
-          <div class="calc-actions">
-            <button type="button" id="calcVip" class="button button-primary">Calculate VIP Cost</button>
+          <div class="field">
+            <label for="playthroughBase">Playthrough base</label>
+            <select id="playthroughBase">
+              <option value="bonus">Bonus only</option>
+              <option value="bonusDeposit">Bonus + deposit</option>
+            </select>
           </div>
-          <div class="result" id="vipResult" aria-live="polite"></div>
-        </article>
-
-        <article class="tool">
-          <h3>Redemption Planner</h3>
-          <p>Estimate days and expected playthrough cost before a sweeps redemption.</p>
-          <div class="form-grid two">
-            <div class="field">
-              <label for="redeemBalance">Current SC balance</label>
-              <input id="redeemBalance" type="number" min="0" step="0.01" value="10">
-            </div>
-            <div class="field">
-              <label for="redeemMin">Redemption minimum</label>
-              <input id="redeemMin" type="number" min="0" step="0.01" value="50">
-            </div>
-            <div class="field">
-              <label for="dailyClaim">Daily claim amount</label>
-              <input id="dailyClaim" type="number" min="0" step="0.01" value="1">
-            </div>
-            <div class="field">
-              <label for="redeemEdge">Clearing house edge %</label>
-              <input id="redeemEdge" type="number" min="0" step="0.01" value="3">
-            </div>
+          <div class="field">
+            <label for="playthroughContribution">Game contribution %</label>
+            <input id="playthroughContribution" type="number" min="0" max="100" step="1" value="100">
           </div>
-          <div class="calc-actions">
-            <button type="button" id="calcRedeem" class="button button-primary">Plan Redemption</button>
+          <div class="field">
+            <label for="bonusHouseEdge">House edge %</label>
+            <input id="bonusHouseEdge" type="number" min="0" step="0.01" value="3">
           </div>
-          <div class="result" id="redeemResult" aria-live="polite"></div>
-        </article>
-      </div>
+          <div class="field">
+            <label for="bonusRewardRate">Rewards / rakeback %</label>
+            <input id="bonusRewardRate" type="number" min="0" step="0.01" value="0">
+          </div>
+          <div class="field">
+            <label for="currentBalance">Current balance</label>
+            <input id="currentBalance" type="number" min="0" step="0.01" value="0">
+          </div>
+          <div class="field">
+            <label for="redemptionMin">Redemption minimum</label>
+            <input id="redemptionMin" type="number" min="0" step="0.01" value="50">
+          </div>
+          <div class="field">
+            <label for="maxCashout">Max cashout cap</label>
+            <input id="maxCashout" type="number" min="0" step="0.01" value="0">
+          </div>
+          <div class="field">
+            <label for="riskLevel">Variance / risk level</label>
+            <select id="riskLevel">
+              <option value="1.5">Low</option>
+              <option value="2.5" selected>Medium</option>
+              <option value="4">High</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="maxComfortableWager">Max comfortable wager</label>
+            <input id="maxComfortableWager" type="number" min="0" step="0.01" value="1">
+          </div>
+        </div>
+        <div class="calc-actions">
+          <button type="button" id="calcBonus" class="button button-primary">Calculate Promo EV</button>
+          <button type="button" class="button button-secondary" id="loadNoDeposit">Load no-deposit example</button>
+          <button type="button" class="button button-secondary" id="loadDepositMatch">Load deposit-match example</button>
+        </div>
+        <div class="result" id="bonusResult" aria-live="polite"></div>
+      </article>
     </section>
 
-    <section id="daily" class="reveal">
+    <section id="compare" class="reveal">
       <div class="section-head">
         <div>
-          <h2>Daily Claim Tracker</h2>
-          <p class="section-note">A lightweight tracker that resets by date and saves only in this browser. Your data never leaves your device.</p>
+          <h2>Offer Comparator</h2>
+          <p class="section-note">Enter several offers and rank them by estimated value, playthrough burden, and whether they are worth touching.</p>
         </div>
       </div>
 
-      <div class="claim-grid">
-        <article class="claim-card">
-          <h3>Stake.us</h3>
-          <p>Mark this after checking your daily reward where available.</p>
-          <label><input type="checkbox" data-daily="stake"> Claimed / checked today</label>
-        </article>
-        <article class="claim-card">
-          <h3>Shuffle.us</h3>
-          <p>Mark this after checking your daily reward where available.</p>
-          <label><input type="checkbox" data-daily="shuffle"> Claimed / checked today</label>
-        </article>
-        <article class="claim-card">
-          <h3>Terms Check</h3>
-          <p>Offers and redemption rules change. Check the current platform terms before chasing anything.</p>
-          <label><input type="checkbox" data-daily="terms"> Terms checked today</label>
-        </article>
+      <article class="tool wide">
+        <div class="offer-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Offer</th>
+                <th>Bonus</th>
+                <th>Deposit</th>
+                <th>Playthrough x</th>
+                <th>Contribution %</th>
+                <th>House edge %</th>
+                <th>Max cashout</th>
+              </tr>
+            </thead>
+            <tbody id="offerRows">
+              <tr>
+                <td><input value="Stake daily"></td>
+                <td><input type="number" value="1" min="0" step="0.01"></td>
+                <td><input type="number" value="0" min="0" step="0.01"></td>
+                <td><input type="number" value="1" min="0" step="0.1"></td>
+                <td><input type="number" value="100" min="0" max="100" step="1"></td>
+                <td><input type="number" value="3" min="0" step="0.01"></td>
+                <td><input type="number" value="0" min="0" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><input value="Shuffle welcome"></td>
+                <td><input type="number" value="1" min="0" step="0.01"></td>
+                <td><input type="number" value="0" min="0" step="0.01"></td>
+                <td><input type="number" value="1" min="0" step="0.1"></td>
+                <td><input type="number" value="100" min="0" max="100" step="1"></td>
+                <td><input type="number" value="3" min="0" step="0.01"></td>
+                <td><input type="number" value="0" min="0" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><input value="Deposit match"></td>
+                <td><input type="number" value="50" min="0" step="0.01"></td>
+                <td><input type="number" value="50" min="0" step="0.01"></td>
+                <td><input type="number" value="20" min="0" step="0.1"></td>
+                <td><input type="number" value="100" min="0" max="100" step="1"></td>
+                <td><input type="number" value="3" min="0" step="0.01"></td>
+                <td><input type="number" value="0" min="0" step="0.01"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="calc-actions">
+          <button type="button" id="compareOffers" class="button button-primary">Rank Offers</button>
+        </div>
+        <div class="rank-list" id="offerResult" aria-live="polite"></div>
+      </article>
+    </section>
+
+    <section id="amoe" class="reveal">
+      <div class="section-head">
+        <div>
+          <h2>AMOE Value / Time Calculator</h2>
+          <p class="section-note">Estimate whether mail-in sweepstakes entries are worth the postage, supplies, approval rate, and time.</p>
+        </div>
       </div>
-      <div class="callout" id="dailyStatus" role="status" aria-live="polite">Daily tracker loading.</div>
+
+      <article class="tool wide">
+        <div class="form-grid">
+          <div class="field">
+            <label for="amoeCredits">Credit value per approved request</label>
+            <input id="amoeCredits" type="number" min="0" step="0.01" value="5">
+          </div>
+          <div class="field">
+            <label for="amoePostage">Postage cost per request</label>
+            <input id="amoePostage" type="number" min="0" step="0.01" value="0.73">
+          </div>
+          <div class="field">
+            <label for="amoeMaterials">Card/envelope/material cost</label>
+            <input id="amoeMaterials" type="number" min="0" step="0.01" value="0.15">
+          </div>
+          <div class="field">
+            <label for="amoeApproval">Estimated approval %</label>
+            <input id="amoeApproval" type="number" min="0" max="100" step="1" value="90">
+          </div>
+          <div class="field">
+            <label for="amoeMinutes">Minutes per request</label>
+            <input id="amoeMinutes" type="number" min="0" step="0.1" value="3">
+          </div>
+          <div class="field">
+            <label for="amoeMonthlyLimit">Monthly request count</label>
+            <input id="amoeMonthlyLimit" type="number" min="0" step="1" value="100">
+          </div>
+        </div>
+        <div class="calc-actions">
+          <button type="button" id="calcAmoe" class="button button-primary">Calculate AMOE Value</button>
+        </div>
+        <div class="result" id="amoeResult" aria-live="polite"></div>
+      </article>
     </section>
 
     <section id="links" class="reveal">
@@ -207,30 +315,30 @@
         <p class="notice">PurePlays may benefit if you sign up through these links. Availability depends on age, location, verification, account status, and each platform's terms.</p>
       </div>
 
-      <div class="platform-grid">
-        <article class="platform">
+      <div class="link-grid">
+        <article class="link-card">
           <div class="tag-row">
-            <span class="tag green">U.S. sweeps</span>
+            <span class="tag">U.S. sweeps</span>
             <span class="tag gold">Gold Coins</span>
             <span class="tag">Stake Cash</span>
           </div>
           <h3>Stake.us</h3>
           <p>Social sweepstakes casino for eligible U.S. users. Uses Gold Coins for standard play and Stake Cash for promotional sweepstakes play.</p>
-          <a class="primary-link" href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Stake.us</a>
+          <a href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Stake.us</a>
         </article>
 
-        <article class="platform">
+        <article class="link-card">
           <div class="tag-row">
-            <span class="tag green">U.S. sweeps</span>
+            <span class="tag">U.S. sweeps</span>
             <span class="tag gold">Gold Coins</span>
             <span class="tag">Shuffle Cash</span>
           </div>
           <h3>Shuffle.us</h3>
           <p>Social sweepstakes casino for eligible U.S. users. Uses Gold Coins and Shuffle Cash, with eligibility and verification requirements.</p>
-          <a class="primary-link" href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Shuffle.us</a>
+          <a href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Shuffle.us</a>
         </article>
 
-        <article class="platform">
+        <article class="link-card">
           <div class="tag-row">
             <span class="tag">Crypto casino</span>
             <span class="tag">Sportsbook</span>
@@ -238,7 +346,7 @@
           </div>
           <h3>Winna.com</h3>
           <p>Crypto casino and sportsbook. Not a Gold Coin / SC sweepstakes platform. Check local law, wallet details, KYC, and withdrawal rules.</p>
-          <a class="primary-link" href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Winna.com</a>
+          <a href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Winna.com</a>
         </article>
       </div>
     </section>
@@ -246,23 +354,26 @@
     <section id="guide" class="reveal">
       <div class="section-head">
         <div>
-          <h2>Quick Platform Guide</h2>
-          <p class="section-note">The most important thing is not mixing up social sweepstakes sites with crypto casino/sportsbook sites.</p>
+          <h2>Built For Better Decisions</h2>
+          <p class="section-note">Most code/referral sites list links. PurePlays should help users decide whether a promo is mathematically worth touching.</p>
         </div>
       </div>
 
       <div class="guide-grid">
-        <article class="guide">
-          <h3>U.S. Sweeps</h3>
-          <p>Stake.us and Shuffle.us use Gold Coins plus sweepstakes-style currency. Availability, verification, redemption, and age rules apply.</p>
+        <article class="guide-card">
+          <div class="guide-icon">◎</div>
+          <h3>Built for players</h3>
+          <p>Every tool is designed to make offer math clearer before users spend money or time.</p>
         </article>
-        <article class="guide">
-          <h3>Crypto Casino</h3>
-          <p>Winna.com uses crypto rails and is not a sweeps coin site. Crypto withdrawals can be irreversible.</p>
+        <article class="guide-card">
+          <div class="guide-icon">◇</div>
+          <h3>Fair and transparent</h3>
+          <p>No hidden math. The assumptions are visible, editable, and easy to challenge.</p>
         </article>
-        <article class="guide">
-          <h3>Stake.com</h3>
-          <p>Not listed yet because the exact PurePlays referral URL has not been provided. It should not be treated as a U.S. offer.</p>
+        <article class="guide-card">
+          <div class="guide-icon">♕</div>
+          <h3>Maximize your edge</h3>
+          <p>Turn promo terms, playthrough, rakeback, and AMOE costs into a practical decision.</p>
         </article>
       </div>
     </section>
@@ -295,14 +406,20 @@
             <tr>
               <td>Shuffle.us</td>
               <td>U.S. sweepstakes casino</td>
-              <td>Gold Coins and Shuffle Cash. Age and state verification required. Check terms for current eligibility and redemption rates.</td>
+              <td>Gold Coins plus Shuffle Cash. Check current welcome offer, verification, state availability, and redemption terms.</td>
               <td><a href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open</a></td>
             </tr>
             <tr>
               <td>Winna.com</td>
-              <td>Crypto casino + sportsbook</td>
-              <td>Not a sweeps site. Uses crypto rails. Check KYC requirements, local law, wallet setup, and withdrawal rules before funding.</td>
+              <td>Crypto casino / sportsbook</td>
+              <td>Not a sweepstakes coin site. Check jurisdiction, wallet, KYC, and withdrawal rules.</td>
               <td><a href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open</a></td>
+            </tr>
+            <tr>
+              <td>Stake.com</td>
+              <td>Crypto casino / sportsbook</td>
+              <td>Not listed until the exact PurePlays referral URL is provided. Do not treat as a U.S. offer.</td>
+              <td>Pending</td>
             </tr>
           </tbody>
         </table>
@@ -311,7 +428,7 @@
   </main>
 
   <footer class="shell">
-    <p>&copy; 2026 PurePlays. All calculators are informational tools only. Not financial or gambling advice. Please play responsibly.</p>
+    <p>This page contains affiliate/referral links. PurePlays may benefit if you sign up. Calculators are estimates only. Not financial or gambling advice.</p>
   </footer>
 
   <script src="script.js" defer></script>
