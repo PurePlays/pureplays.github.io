@@ -1184,6 +1184,145 @@ function runOptimizer(rerenderCards = true) {
   renderRanking(calculatedSites, amoe);
 }
 
+const checklistItems = [
+  "Stake.us daily checked",
+  "Shuffle.us daily checked",
+  "Winna promos checked",
+  "Promo/code sources checked",
+  "Bad rollover offers skipped",
+  "Notes updated"
+];
+
+function todayKey(name) {
+  return `pureplays:${name}:${new Date().toISOString().slice(0, 10)}`;
+}
+
+function renderDailyReturnChecklist() {
+  const container = $("dailyChecklist");
+  if (!container) return;
+
+  let saved = {};
+  try {
+    saved = JSON.parse(localStorage.getItem(todayKey("daily")) || "{}");
+  } catch {
+    saved = {};
+  }
+
+  container.innerHTML = checklistItems.map((item, index) => `
+    <label>
+      <input type="checkbox" data-return-check="${index}" ${saved[index] ? "checked" : ""}>
+      ${item}
+    </label>
+  `).join("");
+
+  container.querySelectorAll("[data-return-check]").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      saved[checkbox.dataset.returnCheck] = checkbox.checked;
+      try {
+        localStorage.setItem(todayKey("daily"), JSON.stringify(saved));
+      } catch {
+        // Local storage can fail in private browsing; the checklist still works for the current page view.
+      }
+    });
+  });
+}
+
+function resetDailyReturnChecklist() {
+  try {
+    localStorage.removeItem(todayKey("daily"));
+  } catch {
+    // Nothing else needed.
+  }
+  renderDailyReturnChecklist();
+}
+
+function calculatePromoEV() {
+  const bonus = value("promoValue");
+  const deposit = value("promoDeposit");
+  const playthrough = value("promoPlaythrough");
+  const contribution = value("promoContribution") / 100;
+  const edge = value("promoEdge") / 100;
+  const cap = value("promoCap");
+  const result = $("promoResult");
+  if (!result) return;
+
+  const rawWager = contribution > 0 ? (bonus * playthrough) / contribution : Infinity;
+  const usableBonus = cap > 0 ? Math.min(bonus, cap) : bonus;
+  const expectedLoss = Number.isFinite(rawWager) ? rawWager * edge : Infinity;
+  const net = usableBonus - deposit - expectedLoss;
+  const verdictClass = net > 0 ? "good" : net < 0 ? "bad" : "";
+  const verdict = net > 0
+    ? "Worth considering if the written terms match these inputs."
+    : net < 0
+      ? "Skip at these inputs. The math is negative before variance."
+      : "Neutral. Only take it if you were already going to play.";
+
+  result.innerHTML = `
+    <article class="metric"><span>Raw wager</span><strong>${Number.isFinite(rawWager) ? money2.format(rawWager) : "Invalid"}</strong></article>
+    <article class="metric"><span>Expected loss</span><strong>${Number.isFinite(expectedLoss) ? money2.format(expectedLoss) : "Invalid"}</strong></article>
+    <article class="metric"><span>Usable bonus</span><strong>${money2.format(usableBonus)}</strong></article>
+    <article class="metric"><span>Estimated net</span><strong>${Number.isFinite(net) ? money2.format(net) : "Invalid"}</strong></article>
+    <div class="promo-verdict ${verdictClass}">${verdict}</div>
+  `;
+}
+
+function initializeCodeLog() {
+  const log = $("codeLog");
+  const status = $("codeLogStatus");
+  if (!log) return;
+
+  try {
+    log.value = localStorage.getItem("pureplays:codeLog") || "";
+  } catch {
+    log.value = "";
+  }
+
+  log.addEventListener("input", () => {
+    try {
+      localStorage.setItem("pureplays:codeLog", log.value);
+      if (status) status.textContent = "Saved locally in this browser.";
+    } catch {
+      if (status) status.textContent = "Could not save locally in this browser.";
+    }
+  });
+}
+
+function clearCodeLog() {
+  const log = $("codeLog");
+  const status = $("codeLogStatus");
+  if (!log) return;
+  log.value = "";
+  try {
+    localStorage.removeItem("pureplays:codeLog");
+  } catch {
+    // Nothing else needed.
+  }
+  if (status) status.textContent = "Code notes cleared.";
+}
+
+function bindToolHub() {
+  document.querySelectorAll("[data-tool-tab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("[data-tool-tab]").forEach((item) => item.classList.remove("active"));
+      document.querySelectorAll(".tool-panel").forEach((panel) => panel.classList.remove("active"));
+      button.classList.add("active");
+      $(button.dataset.toolTab)?.classList.add("active");
+    });
+  });
+
+  ["promoValue", "promoDeposit", "promoPlaythrough", "promoContribution", "promoEdge", "promoCap"].forEach((id) => {
+    $(id)?.addEventListener("input", calculatePromoEV);
+  });
+
+  $("resetChecklist")?.addEventListener("click", resetDailyReturnChecklist);
+  $("clearCodeLog")?.addEventListener("click", clearCodeLog);
+  renderDailyReturnChecklist();
+  initializeCodeLog();
+  calculatePromoEV();
+}
+
 document.querySelectorAll(".plan-preset").forEach((button) => {
   button.addEventListener("click", () => applyPlanPreset(button.dataset.planPreset));
 });
+
+document.addEventListener("DOMContentLoaded", bindToolHub);

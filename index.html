@@ -27,9 +27,8 @@
       <div class="nav-center">
         <a class="nav-link active" href="#home">Home</a>
         <a class="nav-link" href="#optimizer">Optimizer</a>
+        <a class="nav-link" href="#tool-hub">Tools</a>
         <a class="nav-link" href="#sites">Sites</a>
-        <a class="nav-link" href="#amoe">AMOE</a>
-        <a class="nav-link" href="#results">Results</a>
       </div>
 
       <div class="nav-actions">
@@ -48,7 +47,7 @@
 
         <div class="hero-buttons">
           <a class="button button-blue" href="#optimizer">Build My Plan <span aria-hidden="true">→</span></a>
-          <a class="button button-outline" href="#results"><span class="play" aria-hidden="true">▶</span> See Example Output</a>
+          <a class="button button-outline" href="#verified-links"><span class="play" aria-hidden="true">▶</span> Verified Links</a>
         </div>
 
         <div class="trust-row" aria-label="PurePlays benefits">
@@ -73,6 +72,12 @@
               <small>Include the high-value methods</small>
             </div>
           </div>
+        </div>
+
+        <div id="verified-links" class="hero-link-strip" aria-label="Verified PurePlays referral links">
+          <a href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Join Stake.us</a>
+          <a href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Join Shuffle.us</a>
+          <a href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Join Winna</a>
         </div>
       </div>
 
@@ -101,6 +106,13 @@
         <div class="tool-copy">
           <h2>AMOE Value Engine</h2>
           <p>Estimate mail-in value after postage, supplies, time, and approval rate.</p>
+        </div>
+      </article>
+      <article class="tool-card mini">
+        <div class="tool-icon" aria-hidden="true">$</div>
+        <div class="tool-copy">
+          <h2>Promo EV Checker</h2>
+          <p>Check if a code, reload, or bonus is worth playing before you use it.</p>
         </div>
       </article>
     </section>
@@ -352,6 +364,98 @@
       </div>
     </section>
 
+    <section id="tool-hub" class="tool-hub-section">
+      <div class="section-heading compact">
+        <p class="eyebrow small">Tool hub</p>
+        <h2>Come Back Before You Play</h2>
+        <p>Use the optimizer to choose where to sign up. Use these smaller tools when checking dailies, codes, and promos later.</p>
+      </div>
+
+      <div class="tool-hub-layout">
+        <aside class="tool-menu" aria-label="PurePlays tool menu">
+          <button type="button" class="tool-tab active" data-tool-tab="dailyTool">Daily checklist</button>
+          <button type="button" class="tool-tab" data-tool-tab="promoTool">Promo EV checker</button>
+          <button type="button" class="tool-tab" data-tool-tab="codeTool">Code notes</button>
+          <button type="button" class="tool-tab" data-tool-tab="linkTool">Verified links</button>
+        </aside>
+
+        <div class="tool-panels">
+          <article id="dailyTool" class="utility-card tool-panel active">
+            <div class="table-head">
+              <div>
+                <p class="panel-kicker">Today</p>
+                <h3>Daily Claim Checklist</h3>
+              </div>
+              <button type="button" id="resetChecklist" class="small-action">Reset</button>
+            </div>
+            <p class="helper-note">Saved in this browser for today. This is the simple return habit: open PurePlays, check claims, then use the links where relevant.</p>
+            <div id="dailyChecklist" class="return-checklist"></div>
+          </article>
+
+          <article id="promoTool" class="utility-card tool-panel">
+            <div class="table-head">
+              <div>
+                <p class="panel-kicker">Promo math</p>
+                <h3>Promo EV Checker</h3>
+              </div>
+              <p>For codes, reloads, deposit matches, and small bonuses.</p>
+            </div>
+            <div class="form-grid three">
+              <label>Bonus / code value
+                <div class="money-input"><span>$</span><input id="promoValue" type="number" min="0" step="0.01" value="25"></div>
+              </label>
+              <label>Deposit required
+                <div class="money-input"><span>$</span><input id="promoDeposit" type="number" min="0" step="0.01" value="0"></div>
+              </label>
+              <label>Playthrough multiple
+                <input id="promoPlaythrough" type="number" min="0" step="0.1" value="1">
+              </label>
+              <label>Game contribution %
+                <input id="promoContribution" type="number" min="0" max="100" step="1" value="100">
+              </label>
+              <label>House edge %
+                <input id="promoEdge" type="number" min="0" step="0.1" value="3">
+              </label>
+              <label>Cashout cap
+                <div class="money-input"><span>$</span><input id="promoCap" type="number" min="0" step="0.01" value="0"></div>
+              </label>
+            </div>
+            <div id="promoResult" class="promo-result" aria-live="polite"></div>
+          </article>
+
+          <article id="codeTool" class="utility-card tool-panel">
+            <div class="table-head">
+              <div>
+                <p class="panel-kicker">Code log</p>
+                <h3>Promo Code Notes</h3>
+              </div>
+              <button type="button" id="clearCodeLog" class="small-action">Clear</button>
+            </div>
+            <label>Paste codes, bonus notes, or offer terms
+              <textarea id="codeLog" rows="9" placeholder="Example: Stake.us daily claimed. Shuffle code checked. Deposit match skipped because rollover was too high."></textarea>
+            </label>
+            <p id="codeLogStatus" class="save-status">Saved locally in this browser.</p>
+          </article>
+
+          <article id="linkTool" class="utility-card tool-panel">
+            <div class="table-head">
+              <div>
+                <p class="panel-kicker">Signup links</p>
+                <h3>Verified PurePlays Links</h3>
+              </div>
+              <p>Only real links you provided are clickable.</p>
+            </div>
+            <div class="verified-link-grid">
+              <a href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer"><strong>Stake.us</strong><span>U.S. sweeps: Gold Coins + Stake Cash</span></a>
+              <a href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer"><strong>Shuffle.us</strong><span>U.S. sweeps: Gold Coins + Shuffle Cash</span></a>
+              <a href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer"><strong>Winna.com</strong><span>Crypto casino / sportsbook</span></a>
+            </div>
+            <p class="affiliate-disclosure compact">PurePlays may earn from referral links. The optimizer still shows unlinked sites when they are useful for comparison.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="sites" class="site-picker-section">
       <div class="section-heading compact">
         <p class="eyebrow small">Site database</p>
@@ -375,21 +479,21 @@
         <span class="benefit-icon" aria-hidden="true">◎</span>
         <div>
           <h3>Save my plan</h3>
-          <p>Later, login can save selected sites, assumptions, and monthly targets.</p>
+          <p>Use local checklists and notes now. Account-based saved plans can come later.</p>
         </div>
       </article>
       <article>
         <span class="benefit-icon" aria-hidden="true">✓</span>
         <div>
           <h3>Daily checklist</h3>
-          <p>Turn the plan into a daily claim, code, and offer checklist.</p>
+          <p>Return daily to check claims, code sources, and useful promo notes.</p>
         </div>
       </article>
       <article>
         <span class="benefit-icon" aria-hidden="true">↗</span>
         <div>
-          <h3>Progress report</h3>
-          <p>Track actual value versus projected value each month.</p>
+          <h3>Promo EV</h3>
+          <p>Quickly reject bad rollovers, capped bonuses, and negative-value offers.</p>
         </div>
       </article>
       <article>
