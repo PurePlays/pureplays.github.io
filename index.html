@@ -4,725 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="PurePlays is a dark dashboard for sweeps and crypto casino tools, verified referral links, EV calculators, VIP cost checks, and daily claim tracking.">
+  <meta name="theme-color" content="#070b12">
+  <link rel="canonical" href="https://pureplays.github.io/">
+
+  <meta property="og:title" content="PurePlays | Casino Tools, EV Calculators & Verified Links">
+  <meta property="og:description" content="Check bonus EV, VIP chase cost, redemption timing, daily claims, and verified PurePlays referral links.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pureplays.github.io/">
   <title>PurePlays | Casino Tools, EV Calculators & Verified Links</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #070b12;
-      --panel: #101723;
-      --panel-2: #141e2c;
-      --panel-3: #0d1420;
-      --line: #263347;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --soft: #cbd5e1;
-      --green: #22c55e;
-      --teal: #14b8a6;
-      --gold: #f59e0b;
-      --red: #ef4444;
-      --blue: #38bdf8;
-      --shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      min-width: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background:
-        radial-gradient(circle at top left, rgba(34, 197, 94, 0.13), transparent 28rem),
-        radial-gradient(circle at 80% 0%, rgba(56, 189, 248, 0.12), transparent 30rem),
-        linear-gradient(180deg, #070b12 0%, #0b111b 46%, #070b12 100%);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.5;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    button,
-    input,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .shell {
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto;
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-
-    header {
-      padding: 24px 0 28px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 58px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .logo {
-      width: 50px;
-      height: 50px;
-      object-fit: contain;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(255, 255, 255, 0.06);
-      padding: 7px;
-    }
-
-    .brand strong {
-      display: block;
-      font-weight: 900;
-      font-size: 1.02rem;
-      letter-spacing: 0;
-    }
-
-    .brand span {
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 6px;
-    }
-
-    nav a {
-      color: var(--soft);
-      text-decoration: none;
-      padding: 8px 10px;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 800;
-    }
-
-    nav a:hover {
-      color: var(--text);
-      border-color: var(--line);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.02fr) minmax(330px, 0.62fr);
-      gap: 32px;
-      align-items: end;
-      padding-bottom: 40px;
-      max-width: 100%;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--green);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      background: rgba(34, 197, 94, 0.08);
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 0.82rem;
-      font-weight: 900;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: clamp(3.2rem, 9vw, 7.8rem);
-      letter-spacing: 0;
-      line-height: 0.88;
-      font-weight: 900;
-      max-width: 780px;
-      margin-bottom: 22px;
-    }
-
-    .hero-copy p {
-      color: var(--soft);
-      max-width: 700px;
-      font-size: clamp(1.04rem, 2vw, 1.28rem);
-      margin-bottom: 28px;
-    }
-
-    .hero-copy,
-    .hero-panel,
-    section,
-    .tool,
-    .platform,
-    .guide,
-    .claim-card {
-      max-width: 100%;
-    }
-
-    h1,
-    h2,
-    p,
-    .brand span,
-    .button {
-      overflow-wrap: anywhere;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      border: 0;
-      border-radius: 9px;
-      padding: 12px 16px;
-      text-decoration: none;
-      font-weight: 900;
-      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-    }
-
-    .button:hover {
-      transform: translateY(-1px);
-    }
-
-    .button-primary {
-      background: var(--green);
-      color: #04120a;
-      box-shadow: 0 16px 38px rgba(34, 197, 94, 0.2);
-    }
-
-    .button-secondary {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text);
-      border: 1px solid var(--line);
-    }
-
-    .hero-panel {
-      background: linear-gradient(180deg, rgba(20, 30, 44, 0.92), rgba(13, 20, 32, 0.92));
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-
-    .panel-label {
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0;
-      margin-bottom: 12px;
-    }
-
-    .quick-grid {
-      display: grid;
-      gap: 10px;
-    }
-
-    .quick-link {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      text-decoration: none;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.035);
-      border-radius: 10px;
-      padding: 12px;
-    }
-
-    .quick-link strong {
-      display: block;
-      font-size: 0.98rem;
-      margin-bottom: 2px;
-    }
-
-    .quick-link span {
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-
-    .quick-link em {
-      color: var(--green);
-      font-style: normal;
-      font-weight: 900;
-    }
-
-    main {
-      padding: 20px 0 70px;
-    }
-
-    section {
-      margin-bottom: 54px;
-    }
-
-    .section-head {
-      display: grid;
-      grid-template-columns: minmax(0, 0.85fr) minmax(280px, 0.48fr);
-      gap: 24px;
-      align-items: end;
-      margin-bottom: 18px;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1;
-      letter-spacing: 0;
-      margin-bottom: 10px;
-    }
-
-    .section-note {
-      color: var(--muted);
-      max-width: 760px;
-    }
-
-    .notice {
-      color: var(--soft);
-      background: rgba(245, 158, 11, 0.09);
-      border: 1px solid rgba(245, 158, 11, 0.28);
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 0.92rem;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .tool {
-      background: linear-gradient(180deg, rgba(20, 30, 44, 0.96), rgba(13, 20, 32, 0.96));
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-
-    .tool.wide {
-      grid-column: span 2;
-    }
-
-    .tool h3 {
-      font-size: 1.25rem;
-      margin-bottom: 6px;
-    }
-
-    .tool p {
-      color: var(--muted);
-      font-size: 0.94rem;
-      margin-bottom: 14px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .form-grid.two {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-    }
-
-    .field label {
-      color: var(--soft);
-      font-size: 0.78rem;
-      font-weight: 900;
-    }
-
-    .field input,
-    .field select {
-      width: 100%;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      padding: 11px 12px;
-      outline: none;
-    }
-
-    .field input:focus,
-    .field select:focus {
-      border-color: rgba(34, 197, 94, 0.75);
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.11);
-    }
-
-    .calc-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .calc-actions button {
-      background: var(--green);
-      color: #04120a;
-      border: 0;
-      border-radius: 9px;
-      padding: 10px 13px;
-      font-weight: 900;
-    }
-
-    .calc-actions .ghost {
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--text);
-      border: 1px solid var(--line);
-    }
-
-    .result {
-      margin-top: 14px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .metric {
-      background: rgba(255, 255, 255, 0.045);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 10px;
-    }
-
-    .metric span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.76rem;
-      font-weight: 900;
-      margin-bottom: 4px;
-    }
-
-    .metric strong {
-      font-size: 1.08rem;
-    }
-
-    .callout {
-      border-radius: 10px;
-      padding: 11px 12px;
-      color: var(--soft);
-      background: rgba(56, 189, 248, 0.09);
-      border: 1px solid rgba(56, 189, 248, 0.22);
-      font-size: 0.92rem;
-    }
-
-    .callout.good {
-      background: rgba(34, 197, 94, 0.09);
-      border-color: rgba(34, 197, 94, 0.28);
-    }
-
-    .callout.warn {
-      background: rgba(245, 158, 11, 0.1);
-      border-color: rgba(245, 158, 11, 0.28);
-    }
-
-    .callout.bad {
-      background: rgba(239, 68, 68, 0.1);
-      border-color: rgba(239, 68, 68, 0.28);
-    }
-
-    .claim-grid,
-    .platform-grid,
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .claim-card,
-    .platform,
-    .guide {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: var(--shadow);
-    }
-
-    .claim-card {
-      display: grid;
-      gap: 10px;
-    }
-
-    .claim-card label {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      color: var(--soft);
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .claim-card input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--green);
-    }
-
-    .tag-row {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 24px;
-      border-radius: 999px;
-      padding: 4px 8px;
-      color: #dbeafe;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.22);
-      font-size: 0.74rem;
-      font-weight: 900;
-    }
-
-    .tag.green {
-      color: #bbf7d0;
-      background: rgba(34, 197, 94, 0.11);
-      border-color: rgba(34, 197, 94, 0.24);
-    }
-
-    .tag.gold {
-      color: #fde68a;
-      background: rgba(245, 158, 11, 0.12);
-      border-color: rgba(245, 158, 11, 0.26);
-    }
-
-    .platform {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .platform h3,
-    .guide h3,
-    .claim-card h3 {
-      font-size: 1.16rem;
-      margin-bottom: 8px;
-    }
-
-    .platform p,
-    .guide p,
-    .claim-card p {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 12px;
-    }
-
-    .platform a {
-      margin-top: auto;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 42px;
-      border-radius: 9px;
-      text-decoration: none;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid var(--line);
-      color: var(--text);
-      font-weight: 900;
-      padding: 10px 12px;
-    }
-
-    .platform a.primary-link {
-      color: #04120a;
-      background: var(--green);
-      border-color: transparent;
-    }
-
-    .directory-wrap {
-      overflow-x: auto;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-    }
-
-    table {
-      width: 100%;
-      min-width: 820px;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 13px 12px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-      font-size: 0.92rem;
-    }
-
-    th {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.055);
-      font-weight: 900;
-    }
-
-    td {
-      color: var(--soft);
-    }
-
-    td a {
-      color: var(--green);
-      font-weight: 900;
-      text-decoration: none;
-    }
-
-    tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .footer-cta {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 18px;
-      align-items: center;
-      background:
-        linear-gradient(135deg, rgba(34, 197, 94, 0.14), rgba(56, 189, 248, 0.08)),
-        var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .footer-cta p {
-      color: var(--muted);
-      max-width: 760px;
-    }
-
-    footer {
-      color: var(--muted);
-      text-align: center;
-      padding: 24px 0 36px;
-      font-size: 0.88rem;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 520ms ease, transform 520ms ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 920px) {
-      .topbar,
-      .hero,
-      .section-head,
-      .footer-cta {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar {
-        display: grid;
-      }
-
-      nav {
-        justify-content: flex-start;
-        overflow-x: auto;
-      }
-
-      .tools-grid,
-      .platform-grid,
-      .guide-grid,
-      .claim-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tool.wide {
-        grid-column: span 1;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .shell {
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-
-      .topbar {
-        margin-bottom: 36px;
-      }
-
-      h1 {
-        font-size: clamp(2.8rem, 16vw, 3.4rem);
-      }
-
-      .brand span {
-        max-width: 280px;
-      }
-
-      .hero-copy p {
-        max-width: 330px;
-      }
-
-      .hero-actions,
-      .calc-actions {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .button,
-      .calc-actions button {
-        width: 100%;
-      }
-
-      .hero-actions .button,
-      .hero-panel {
-        max-width: calc(100vw - 24px);
-      }
-
-      .form-grid,
-      .form-grid.two,
-      .metric-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="shell">
@@ -735,11 +28,11 @@
         </div>
       </div>
       <nav aria-label="Primary">
-        <a href="#tools">Tools</a>
-        <a href="#daily">Daily</a>
-        <a href="#links">Links</a>
-        <a href="#guide">Guide</a>
-        <a href="#directory">Directory</a>
+        <a href="#tools" class="nav-link">Tools</a>
+        <a href="#daily" class="nav-link">Daily</a>
+        <a href="#links" class="nav-link">Links</a>
+        <a href="#guide" class="nav-link">Guide</a>
+        <a href="#directory" class="nav-link">Directory</a>
       </nav>
     </div>
 
@@ -815,10 +108,10 @@
             </div>
           </div>
           <div class="calc-actions">
-            <button type="button" id="calcBonus">Calculate Bonus EV</button>
-            <button type="button" class="ghost" data-example="bonus">Load daily-claim example</button>
+            <button type="button" id="calcBonus" class="button button-primary">Calculate Bonus EV</button>
+            <button type="button" class="button button-secondary ghost" data-example="bonus">Load daily-claim example</button>
           </div>
-          <div class="result" id="bonusResult"></div>
+          <div class="result" id="bonusResult" aria-live="polite"></div>
         </article>
 
         <article class="tool">
@@ -843,9 +136,9 @@
             </div>
           </div>
           <div class="calc-actions">
-            <button type="button" id="calcVip">Calculate VIP Cost</button>
+            <button type="button" id="calcVip" class="button button-primary">Calculate VIP Cost</button>
           </div>
-          <div class="result" id="vipResult"></div>
+          <div class="result" id="vipResult" aria-live="polite"></div>
         </article>
 
         <article class="tool">
@@ -870,9 +163,9 @@
             </div>
           </div>
           <div class="calc-actions">
-            <button type="button" id="calcRedeem">Plan Redemption</button>
+            <button type="button" id="calcRedeem" class="button button-primary">Plan Redemption</button>
           </div>
-          <div class="result" id="redeemResult"></div>
+          <div class="result" id="redeemResult" aria-live="polite"></div>
         </article>
       </div>
     </section>
@@ -881,7 +174,7 @@
       <div class="section-head">
         <div>
           <h2>Daily Claim Tracker</h2>
-          <p class="section-note">A lightweight tracker that resets by date and saves only in this browser.</p>
+          <p class="section-note">A lightweight tracker that resets by date and saves only in this browser. Your data never leaves your device.</p>
         </div>
       </div>
 
@@ -902,7 +195,7 @@
           <label><input type="checkbox" data-daily="terms"> Terms checked today</label>
         </article>
       </div>
-      <div class="callout" id="dailyStatus">Daily tracker loading.</div>
+      <div class="callout" id="dailyStatus" role="status" aria-live="polite">Daily tracker loading.</div>
     </section>
 
     <section id="links" class="reveal">
@@ -1002,190 +295,25 @@
             <tr>
               <td>Shuffle.us</td>
               <td>U.S. sweepstakes casino</td>
-              <td>Gold Coins plus Shuffle Cash. Check current welcome offer, verification, state availability, and redemption terms.</td>
+              <td>Gold Coins and Shuffle Cash. Age and state verification required. Check terms for current eligibility and redemption rates.</td>
               <td><a href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open</a></td>
             </tr>
             <tr>
               <td>Winna.com</td>
-              <td>Crypto casino / sportsbook</td>
-              <td>Not a sweepstakes coin site. Check jurisdiction, wallet, KYC, and withdrawal rules.</td>
+              <td>Crypto casino + sportsbook</td>
+              <td>Not a sweeps site. Uses crypto rails. Check KYC requirements, local law, wallet setup, and withdrawal rules before funding.</td>
               <td><a href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open</a></td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
-
-    <section class="reveal">
-      <div class="footer-cta">
-        <div>
-          <h2>Use the tools first.</h2>
-          <p>PurePlays is designed to help users check EV, expected cost, redemption paths, and platform type before clicking any offer.</p>
-        </div>
-        <a class="button button-primary" href="#tools">Back To Tools</a>
-      </div>
-    </section>
   </main>
 
   <footer class="shell">
-    <p>This page contains affiliate/referral links. PurePlays may benefit if you sign up. No calculator predicts future wins.</p>
+    <p>&copy; 2026 PurePlays. All calculators are informational tools only. Not financial or gambling advice. Please play responsibly.</p>
   </footer>
 
-  <script>
-    const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
-    const pct = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
-
-    function value(id) {
-      return Number(document.getElementById(id).value || 0);
-    }
-
-    function dollars(n) {
-      if (!Number.isFinite(n)) return "$0.00";
-      return money.format(n);
-    }
-
-    function metric(label, val) {
-      return `<div class="metric"><span>${label}</span><strong>${val}</strong></div>`;
-    }
-
-    function verdictClass(net) {
-      if (net > 0) return "good";
-      if (net < 0) return "bad";
-      return "warn";
-    }
-
-    function calculateBonus() {
-      const bonus = value("bonusAmount");
-      const multiple = value("playthroughMultiple");
-      const edge = value("bonusHouseEdge") / 100;
-      const balance = value("currentBalance");
-      const redemptionMin = value("redemptionMin");
-      const wagerCap = value("bonusWagerCap");
-      const requiredWager = bonus * multiple;
-      const expectedLoss = requiredWager * edge;
-      const expectedValue = bonus - expectedLoss;
-      const expectedFinal = balance + expectedValue;
-      const canReachMin = expectedFinal >= redemptionMin;
-      const suggestedUnit = wagerCap > 0 ? Math.min(wagerCap, Math.max(0.01, (balance + bonus) * 0.01)) : Math.max(0.01, (balance + bonus) * 0.01);
-      const cls = verdictClass(expectedValue);
-      const text = expectedValue > 0
-        ? "Positive estimated promo value before variance. Still check the current terms and redemption rules."
-        : "Negative estimated value at these inputs. This bonus may cost more to clear than it is worth.";
-
-      document.getElementById("bonusResult").innerHTML = `
-        <div class="metric-grid">
-          ${metric("Required wager", dollars(requiredWager))}
-          ${metric("Expected loss", dollars(expectedLoss))}
-          ${metric("Expected bonus EV", dollars(expectedValue))}
-          ${metric("Expected final balance", dollars(expectedFinal))}
-          ${metric("Redemption minimum", dollars(redemptionMin))}
-          ${metric("Suggested unit cap", dollars(suggestedUnit))}
-        </div>
-        <div class="callout ${cls}">${text} ${canReachMin ? "Expected balance clears the redemption minimum." : "Expected balance does not reach the redemption minimum yet."}</div>
-      `;
-    }
-
-    function calculateVip() {
-      const wager = value("vipWagerNeeded");
-      const edge = value("vipHouseEdge") / 100;
-      const rewardRate = value("vipRewardRate") / 100;
-      const bonus = value("vipBonus");
-      const expectedLoss = wager * edge;
-      const expectedRewards = wager * rewardRate + bonus;
-      const net = expectedRewards - expectedLoss;
-      const cls = verdictClass(net);
-      const text = net >= 0
-        ? "The entered rewards cover the estimated house-edge cost. Variance and withdrawal limits still matter."
-        : "The VIP chase is negative at these inputs. Chasing the level likely costs more than the reward is worth.";
-
-      document.getElementById("vipResult").innerHTML = `
-        <div class="metric-grid">
-          ${metric("Expected loss", dollars(expectedLoss))}
-          ${metric("Expected rewards", dollars(expectedRewards))}
-          ${metric("Net estimate", dollars(net))}
-        </div>
-        <div class="callout ${cls}">${text}</div>
-      `;
-    }
-
-    function calculateRedeem() {
-      const balance = value("redeemBalance");
-      const min = value("redeemMin");
-      const daily = value("dailyClaim");
-      const edge = value("redeemEdge") / 100;
-      const remaining = Math.max(0, min - balance);
-      const days = daily > 0 ? Math.ceil(remaining / daily) : Infinity;
-      const clearingLoss = balance * edge;
-      const expectedAfterClear = Math.max(0, balance - clearingLoss);
-      const cls = remaining === 0 ? "good" : "warn";
-      const dayText = Number.isFinite(days) ? `${days} day${days === 1 ? "" : "s"}` : "No daily claim entered";
-
-      document.getElementById("redeemResult").innerHTML = `
-        <div class="metric-grid">
-          ${metric("Amount to minimum", dollars(remaining))}
-          ${metric("Days from claims", dayText)}
-          ${metric("Estimated clear cost", dollars(clearingLoss))}
-          ${metric("After clear estimate", dollars(expectedAfterClear))}
-          ${metric("Redemption minimum", dollars(min))}
-          ${metric("Current balance", dollars(balance))}
-        </div>
-        <div class="callout ${cls}">${remaining === 0 ? "You are at or above the entered redemption minimum before considering playthrough rules." : "Keep collecting if you are not depositing. Do not chase redemption if clearing costs exceed the value."}</div>
-      `;
-    }
-
-    document.getElementById("calcBonus").addEventListener("click", calculateBonus);
-    document.getElementById("calcVip").addEventListener("click", calculateVip);
-    document.getElementById("calcRedeem").addEventListener("click", calculateRedeem);
-
-    document.querySelector("[data-example='bonus']").addEventListener("click", () => {
-      document.getElementById("bonusAmount").value = 25;
-      document.getElementById("playthroughMultiple").value = 1;
-      document.getElementById("bonusHouseEdge").value = 3;
-      document.getElementById("currentBalance").value = 0;
-      document.getElementById("redemptionMin").value = 50;
-      document.getElementById("bonusWagerCap").value = 1;
-      calculateBonus();
-    });
-
-    const todayKey = new Date().toISOString().slice(0, 10);
-    const dailyKey = `pureplays-daily-${todayKey}`;
-    const dailyInputs = Array.from(document.querySelectorAll("[data-daily]"));
-    const dailyStatus = document.getElementById("dailyStatus");
-    const savedDaily = JSON.parse(localStorage.getItem(dailyKey) || "{}");
-
-    function updateDailyStatus() {
-      const current = {};
-      let checked = 0;
-      dailyInputs.forEach((input) => {
-        current[input.dataset.daily] = input.checked;
-        if (input.checked) checked += 1;
-      });
-      localStorage.setItem(dailyKey, JSON.stringify(current));
-      dailyStatus.textContent = `${checked} of ${dailyInputs.length} daily checks complete today.`;
-      dailyStatus.className = checked === dailyInputs.length ? "callout good" : "callout";
-    }
-
-    dailyInputs.forEach((input) => {
-      input.checked = Boolean(savedDaily[input.dataset.daily]);
-      input.addEventListener("change", updateDailyStatus);
-    });
-
-    const revealItems = Array.from(document.querySelectorAll(".reveal"));
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    revealItems.forEach((item) => observer.observe(item));
-
-    calculateBonus();
-    calculateVip();
-    calculateRedeem();
-    updateDailyStatus();
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>
