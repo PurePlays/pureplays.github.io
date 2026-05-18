@@ -398,6 +398,44 @@ button {
   transform: rotate(-1deg);
 }
 
+.home-tool-rail {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  justify-self: end;
+  width: min(100%, 390px);
+  display: grid;
+  gap: 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 250, 241, 0.78);
+  box-shadow: var(--shadow-soft);
+  padding: 16px;
+  backdrop-filter: blur(12px);
+}
+
+.home-tool-rail a {
+  display: grid;
+  gap: 3px;
+  border: 1px solid rgba(151, 126, 86, 0.22);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.36);
+  padding: 11px 12px;
+}
+
+.home-tool-rail strong {
+  color: var(--navy);
+  font-size: 0.94rem;
+  font-weight: 900;
+}
+
+.home-tool-rail span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .tool-cards {
   position: relative;
   z-index: 3;
@@ -1016,6 +1054,12 @@ td {
     right: -200px;
     top: 90px;
     opacity: 0.65;
+  }
+
+  .home-tool-rail {
+    justify-self: stretch;
+    width: 100%;
+    margin-top: 18px;
   }
 
   .trust-row,

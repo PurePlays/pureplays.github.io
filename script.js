@@ -1345,6 +1345,9 @@ function bindRouting() {
     link.addEventListener("click", (event) => {
       event.preventDefault();
       showRoute(link.dataset.route);
+      if (link.dataset.toolJump) {
+        document.querySelector(`[data-tool-tab="${link.dataset.toolJump}"]`)?.click();
+      }
     });
   });
 
