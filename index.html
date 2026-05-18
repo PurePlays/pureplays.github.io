@@ -198,11 +198,16 @@
         </aside>
 
         <section class="results-panel" id="results">
-          <div class="score-card">
-            <div>
+          <div class="hero-result-card">
+            <div class="result-copy">
               <p class="panel-kicker">Plan verdict</p>
               <h3 id="verdictTitle">Run the optimizer</h3>
               <p id="verdictText">Select your sites and methods to estimate whether your monthly target is realistic.</p>
+              <div class="verdict-tags" id="verdictTags">
+                <span>Goal Mode</span>
+                <span>Editable assumptions</span>
+                <span>Affiliate-ready plan</span>
+              </div>
             </div>
             <div class="score-ring" aria-label="PurePlay Score">
               <strong id="scoreValue">--</strong>
@@ -210,13 +215,53 @@
             </div>
           </div>
 
-          <div class="metric-grid">
+          <div class="metric-grid primary-metrics">
             <article class="metric"><span>Projected monthly value</span><strong id="monthlyValue">$0</strong></article>
             <article class="metric"><span>Target gap</span><strong id="targetGap">$0</strong></article>
-            <article class="metric"><span>Time/month</span><strong id="timeMonth">0 hrs</strong></article>
             <article class="metric"><span>Hourly value</span><strong id="hourlyValue">$0/hr</strong></article>
+            <article class="metric"><span>Time/month</span><strong id="timeMonth">0 hrs</strong></article>
             <article class="metric"><span>Daily checklist time</span><strong id="dailyTime">0 min/day</strong></article>
             <article class="metric"><span>Selected sites</span><strong id="selectedSites">0</strong></article>
+          </div>
+
+          <div class="scenario-grid" aria-label="Projection scenarios">
+            <article class="scenario-card conservative">
+              <span>Conservative</span>
+              <strong id="conservativeValue">$0</strong>
+              <small>Lower hit rate, more friction, missed claims</small>
+            </article>
+            <article class="scenario-card realistic">
+              <span>Realistic</span>
+              <strong id="realisticValue">$0</strong>
+              <small>Current editable assumptions</small>
+            </article>
+            <article class="scenario-card aggressive">
+              <span>Aggressive</span>
+              <strong id="aggressiveValue">$0</strong>
+              <small>Better consistency, stronger promos</small>
+            </article>
+          </div>
+
+          <div class="funnel-card" id="gapSection">
+            <div class="table-head">
+              <div>
+                <p class="panel-kicker">Money section</p>
+                <h3>Ways to reach your goal</h3>
+              </div>
+              <p id="gapSummary">Run the optimizer to see which sites and methods close the gap.</p>
+            </div>
+            <div class="gap-cards" id="gapCards"></div>
+          </div>
+
+          <div class="funnel-card">
+            <div class="table-head">
+              <div>
+                <p class="panel-kicker">Affiliate funnel</p>
+                <h3>Recommended sites for your plan</h3>
+              </div>
+              <p>These are the strongest signup opportunities based on the goal, methods, value, and friction assumptions.</p>
+            </div>
+            <div class="recommended-grid" id="recommendedSites"></div>
           </div>
 
           <div class="breakdown-grid">
@@ -233,10 +278,21 @@
             </article>
           </div>
 
+          <div class="funnel-card start-plan">
+            <div class="table-head">
+              <div>
+                <p class="panel-kicker">Conversion checklist</p>
+                <h3>Start this plan</h3>
+              </div>
+              <p>Turn the estimate into the exact next steps. Affiliate buttons are placed where the user is deciding what to add.</p>
+            </div>
+            <div id="startPlan" class="start-plan-grid"></div>
+          </div>
+
           <div class="breakdown-card">
             <div class="table-head">
               <h3>Site priority ranking</h3>
-              <p>Higher score means better estimated value, lower friction, and better fit for the chosen methods.</p>
+              <p>Advanced view. Higher score means better estimated value, lower friction, and better fit for the chosen methods.</p>
             </div>
             <div class="table-wrap">
               <table>
@@ -262,16 +318,17 @@
       <div class="section-heading compact">
         <p class="eyebrow small">Site database</p>
         <h2>Choose sites for the plan</h2>
-        <p>These are editable starting estimates. The goal is to rank realistic value, not pretend every casino is automatically worth your time.</p>
+        <p>Use the simple cards to choose sites. Open advanced assumptions only when you want to edit the numbers behind the plan.</p>
       </div>
 
       <div class="site-toolbar">
         <button type="button" id="selectCore">Select core sites</button>
         <button type="button" id="selectAllSites">Select all</button>
         <button type="button" id="clearSites">Clear</button>
-        <button type="button" id="resetEstimates">Reset estimates</button>
+        <button type="button" id="resetEstimates">Reset all estimates</button>
       </div>
 
+      <p class="helper-note">Default view is intentionally simple. Click “Edit assumptions” inside any card to change dailies, codes, offers, VIP, giveaway, time, and friction estimates.</p>
       <div id="siteGrid" class="site-grid"></div>
     </section>
 
