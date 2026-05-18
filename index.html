@@ -3,30 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="PurePlays is a transparent referral hub and platform directory for sweepstakes casino, crypto casino, and rewards offers with useful tools and clear disclosures.">
-  <title>PurePlays | Referral Hub & Platform Tools</title>
+  <meta name="description" content="PurePlays is a dark dashboard for sweeps and crypto casino tools, verified referral links, EV calculators, VIP cost checks, and daily claim tracking.">
+  <title>PurePlays | Casino Tools, EV Calculators & Verified Links</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #111827;
-      --muted: #5d6878;
-      --line: #dbe3ef;
-      --paper: #f4f7fb;
-      --panel: #ffffff;
-      --navy: #10233f;
-      --blue: #2366d1;
-      --teal: #0f766e;
-      --gold: #e6aa27;
-      --red: #b42318;
-      --shadow: 0 18px 60px rgba(16, 35, 63, 0.12);
+      --bg: #070b12;
+      --panel: #101723;
+      --panel-2: #141e2c;
+      --panel-3: #0d1420;
+      --line: #263347;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --soft: #cbd5e1;
+      --green: #22c55e;
+      --teal: #14b8a6;
+      --gold: #f59e0b;
+      --red: #ef4444;
+      --blue: #38bdf8;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      min-width: 0;
     }
 
     html {
@@ -34,10 +38,14 @@
     }
 
     body {
-      background: var(--paper);
-      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.13), transparent 28rem),
+        radial-gradient(circle at 80% 0%, rgba(56, 189, 248, 0.12), transparent 30rem),
+        linear-gradient(180deg, #070b12 0%, #0b111b 46%, #070b12 100%);
+      color: var(--text);
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.5;
+      overflow-x: hidden;
     }
 
     a {
@@ -50,99 +58,155 @@
       font: inherit;
     }
 
-    .hero {
-      min-height: 86svh;
-      color: #ffffff;
-      background:
-        linear-gradient(105deg, rgba(10, 25, 47, 0.96) 0%, rgba(10, 25, 47, 0.88) 43%, rgba(10, 25, 47, 0.28) 100%),
-        url("https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1800&q=82") center / cover;
-      display: flex;
-      align-items: center;
-      padding: 34px 22px 52px;
+    button {
+      cursor: pointer;
     }
 
-    .hero-inner {
-      width: min(1120px, 100%);
+    .shell {
+      width: 100%;
+      max-width: 1180px;
       margin: 0 auto;
+      padding-left: 16px;
+      padding-right: 16px;
     }
 
-    .brand-row {
+    header {
+      padding: 24px 0 28px;
+    }
+
+    .topbar {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 14px;
+      gap: 18px;
       margin-bottom: 58px;
     }
 
-    .logo {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      padding: 8px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
     }
 
-    .brand-name {
-      font-size: 1.08rem;
+    .logo {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 7px;
+    }
+
+    .brand strong {
+      display: block;
       font-weight: 900;
+      font-size: 1.02rem;
       letter-spacing: 0;
     }
 
-    .brand-sub {
-      color: rgba(255, 255, 255, 0.74);
-      font-size: 0.9rem;
-      margin-top: 2px;
+    .brand span {
+      color: var(--muted);
+      font-size: 0.86rem;
     }
 
-    .hero-copy {
-      max-width: 760px;
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    nav a {
+      color: var(--soft);
+      text-decoration: none;
+      padding: 8px 10px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    nav a:hover {
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(330px, 0.62fr);
+      gap: 32px;
+      align-items: end;
+      padding-bottom: 40px;
+      max-width: 100%;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 18px;
-      color: #ffe2a1;
-      font-size: 0.88rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0;
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      background: rgba(34, 197, 94, 0.08);
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      margin-bottom: 20px;
     }
 
-    .hero h1 {
-      font-size: clamp(3rem, 8vw, 6.8rem);
-      line-height: 0.92;
+    h1 {
+      font-size: clamp(3.2rem, 9vw, 7.8rem);
       letter-spacing: 0;
+      line-height: 0.88;
       font-weight: 900;
+      max-width: 780px;
       margin-bottom: 22px;
     }
 
-    .hero p {
-      color: rgba(255, 255, 255, 0.88);
+    .hero-copy p {
+      color: var(--soft);
+      max-width: 700px;
       font-size: clamp(1.04rem, 2vw, 1.28rem);
-      max-width: 650px;
       margin-bottom: 28px;
+    }
+
+    .hero-copy,
+    .hero-panel,
+    section,
+    .tool,
+    .platform,
+    .guide,
+    .claim-card {
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    p,
+    .brand span,
+    .button {
+      overflow-wrap: anywhere;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
 
     .button {
-      border: 0;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-height: 46px;
-      border-radius: 8px;
+      border: 0;
+      border-radius: 9px;
       padding: 12px 16px;
-      cursor: pointer;
-      font-weight: 800;
       text-decoration: none;
+      font-weight: 900;
       transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
@@ -151,70 +215,86 @@
     }
 
     .button-primary {
-      background: var(--gold);
-      color: #141414;
-      box-shadow: 0 12px 32px rgba(230, 170, 39, 0.26);
+      background: var(--green);
+      color: #04120a;
+      box-shadow: 0 16px 38px rgba(34, 197, 94, 0.2);
     }
 
     .button-secondary {
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.34);
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid var(--line);
     }
 
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(244, 247, 251, 0.92);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(14px);
+    .hero-panel {
+      background: linear-gradient(180deg, rgba(20, 30, 44, 0.92), rgba(13, 20, 32, 0.92));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 18px;
     }
 
-    .nav-inner {
-      width: min(1120px, 100%);
-      margin: 0 auto;
-      padding: 10px 18px;
+    .panel-label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      margin-bottom: 12px;
+    }
+
+    .quick-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .quick-link {
       display: flex;
-      gap: 6px;
-      overflow-x: auto;
-    }
-
-    .nav-inner a {
-      white-space: nowrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
       text-decoration: none;
-      color: var(--navy);
-      border-radius: 7px;
-      padding: 8px 10px;
-      font-size: 0.92rem;
-      font-weight: 800;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      border-radius: 10px;
+      padding: 12px;
     }
 
-    .nav-inner a:hover {
-      background: #e7eef9;
+    .quick-link strong {
+      display: block;
+      font-size: 0.98rem;
+      margin-bottom: 2px;
+    }
+
+    .quick-link span {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .quick-link em {
+      color: var(--green);
+      font-style: normal;
+      font-weight: 900;
     }
 
     main {
-      width: min(1120px, 100%);
-      margin: 0 auto;
-      padding: 34px 18px 70px;
+      padding: 20px 0 70px;
     }
 
     section {
-      margin-bottom: 46px;
+      margin-bottom: 54px;
     }
 
     .section-head {
       display: grid;
-      grid-template-columns: minmax(0, 0.82fr) minmax(260px, 0.5fr);
-      gap: 28px;
+      grid-template-columns: minmax(0, 0.85fr) minmax(280px, 0.48fr);
+      gap: 24px;
       align-items: end;
       margin-bottom: 18px;
     }
 
     h2 {
-      color: var(--navy);
-      font-size: clamp(1.8rem, 4vw, 3.1rem);
+      font-size: clamp(2rem, 4vw, 3.2rem);
       line-height: 1;
       letter-spacing: 0;
       margin-bottom: 10px;
@@ -222,41 +302,198 @@
 
     .section-note {
       color: var(--muted);
-      font-size: 1rem;
+      max-width: 760px;
     }
 
     .notice {
-      border-left: 4px solid var(--gold);
-      color: #3d4654;
-      background: #fff8e8;
-      padding: 12px 14px;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.94rem;
+      color: var(--soft);
+      background: rgba(245, 158, 11, 0.09);
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.92rem;
     }
 
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tool {
+      background: linear-gradient(180deg, rgba(20, 30, 44, 0.96), rgba(13, 20, 32, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .tool.wide {
+      grid-column: span 2;
+    }
+
+    .tool h3 {
+      font-size: 1.25rem;
+      margin-bottom: 6px;
+    }
+
+    .tool p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin-bottom: 14px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .form-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: rgba(34, 197, 94, 0.75);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.11);
+    }
+
+    .calc-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .calc-actions button {
+      background: var(--green);
+      color: #04120a;
+      border: 0;
+      border-radius: 9px;
+      padding: 10px 13px;
+      font-weight: 900;
+    }
+
+    .calc-actions .ghost {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .result {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .metric {
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .metric strong {
+      font-size: 1.08rem;
+    }
+
+    .callout {
+      border-radius: 10px;
+      padding: 11px 12px;
+      color: var(--soft);
+      background: rgba(56, 189, 248, 0.09);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      font-size: 0.92rem;
+    }
+
+    .callout.good {
+      background: rgba(34, 197, 94, 0.09);
+      border-color: rgba(34, 197, 94, 0.28);
+    }
+
+    .callout.warn {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.28);
+    }
+
+    .callout.bad {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.28);
+    }
+
+    .claim-grid,
     .platform-grid,
-    .tool-grid,
-    .calculator-grid {
+    .guide-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
 
+    .claim-card,
     .platform,
-    .tool,
-    .calculator,
-    .guide-panel {
+    .guide {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 14px;
+      padding: 16px;
       box-shadow: var(--shadow);
     }
 
-    .platform {
-      padding: 18px;
+    .claim-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .claim-card label {
       display: flex;
-      flex-direction: column;
-      min-height: 100%;
+      align-items: center;
+      gap: 9px;
+      color: var(--soft);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .claim-card input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
     }
 
     .tag-row {
@@ -270,316 +507,135 @@
       display: inline-flex;
       align-items: center;
       min-height: 24px;
-      padding: 4px 8px;
       border-radius: 999px;
-      background: #edf4ff;
-      color: #173a6a;
-      border: 1px solid #d5e5fb;
-      font-size: 0.75rem;
-      font-weight: 800;
-    }
-
-    .tag.crypto {
-      background: #eefcf8;
-      color: #0d5c53;
-      border-color: #c8ece5;
-    }
-
-    .tag.warn {
-      background: #fff3db;
-      color: #744a00;
-      border-color: #f4d399;
-    }
-
-    .platform h3 {
-      font-size: 1.34rem;
-      margin-bottom: 8px;
-      color: var(--navy);
-    }
-
-    .platform p {
-      color: var(--muted);
-      margin-bottom: 14px;
-      font-size: 0.95rem;
-    }
-
-    .fact-list {
-      list-style: none;
-      display: grid;
-      gap: 7px;
-      margin: 4px 0 18px;
-      color: #354154;
-      font-size: 0.92rem;
-    }
-
-    .fact-list li::before {
-      content: "•";
-      color: var(--gold);
+      padding: 4px 8px;
+      color: #dbeafe;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      font-size: 0.74rem;
       font-weight: 900;
-      margin-right: 7px;
     }
 
-    .platform .button {
-      margin-top: auto;
-      width: 100%;
-      background: var(--navy);
-      color: #ffffff;
+    .tag.green {
+      color: #bbf7d0;
+      background: rgba(34, 197, 94, 0.11);
+      border-color: rgba(34, 197, 94, 0.24);
     }
 
-    .platform .button:hover {
-      box-shadow: 0 12px 26px rgba(16, 35, 63, 0.18);
+    .tag.gold {
+      color: #fde68a;
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.26);
     }
 
-    .tool,
-    .calculator {
-      padding: 18px;
+    .platform {
+      display: flex;
+      flex-direction: column;
     }
 
-    .tool h3,
-    .calculator h3,
-    .guide-panel h3 {
-      color: var(--navy);
+    .platform h3,
+    .guide h3,
+    .claim-card h3 {
+      font-size: 1.16rem;
       margin-bottom: 8px;
-      font-size: 1.12rem;
     }
 
-    .tool p,
-    .calculator p,
-    .guide-panel p {
+    .platform p,
+    .guide p,
+    .claim-card p {
       color: var(--muted);
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       margin-bottom: 12px;
     }
 
-    .calculator.featured {
-      grid-column: span 2;
-      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-    }
-
-    .field label {
-      color: #344154;
-      font-size: 0.82rem;
-      font-weight: 800;
-    }
-
-    .field input,
-    .field select {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 10px 11px;
-      color: var(--ink);
-      background: #ffffff;
-    }
-
-    .calculator-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .metric {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 10px;
-      background: #ffffff;
-    }
-
-    .metric span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .metric strong {
-      color: var(--navy);
-      font-size: 1.08rem;
-    }
-
-    .checklist {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .check-item {
-      display: flex;
+    .platform a {
+      margin-top: auto;
+      display: inline-flex;
+      justify-content: center;
       align-items: center;
-      gap: 9px;
-      min-height: 40px;
-      padding: 8px 10px;
+      min-height: 42px;
+      border-radius: 9px;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.07);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fbfdff;
-      cursor: pointer;
-      color: #283347;
-      font-weight: 700;
-    }
-
-    .check-item input {
-      width: 17px;
-      height: 17px;
-      accent-color: var(--teal);
-    }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .input-row input {
-      min-width: 0;
-      flex: 1;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 11px 12px;
-      color: var(--ink);
-    }
-
-    .input-row button,
-    .small-button {
-      border: 0;
-      border-radius: 8px;
-      background: var(--blue);
-      color: #ffffff;
-      font-weight: 800;
-      padding: 10px 12px;
-      cursor: pointer;
-    }
-
-    .result {
-      margin-top: 12px;
-      border-radius: 8px;
-      padding: 12px;
-      background: #f8fbff;
-      border: 1px solid var(--line);
-      color: #2f3a4c;
-      font-size: 0.92rem;
-    }
-
-    .result.good {
-      background: #effcf9;
-      border-color: #b7e3dc;
-    }
-
-    .result.warn {
-      background: #fff8e8;
-      border-color: #f0d28c;
-    }
-
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .guide-panel {
-      padding: 18px;
-    }
-
-    .guide-panel ul {
-      list-style: none;
-      display: grid;
-      gap: 8px;
-      color: #354154;
-      font-size: 0.94rem;
-    }
-
-    .guide-panel li::before {
-      content: "✓";
-      color: var(--teal);
+      color: var(--text);
       font-weight: 900;
-      margin-right: 8px;
+      padding: 10px 12px;
+    }
+
+    .platform a.primary-link {
+      color: #04120a;
+      background: var(--green);
+      border-color: transparent;
     }
 
     .directory-wrap {
       overflow-x: auto;
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 14px;
       box-shadow: var(--shadow);
     }
 
     table {
       width: 100%;
+      min-width: 820px;
       border-collapse: collapse;
-      min-width: 760px;
-      font-size: 0.94rem;
     }
 
     th,
     td {
+      padding: 13px 12px;
       border-bottom: 1px solid var(--line);
-      padding: 12px;
       text-align: left;
       vertical-align: top;
+      font-size: 0.92rem;
     }
 
     th {
-      color: var(--navy);
-      background: #edf3fb;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.055);
       font-weight: 900;
+    }
+
+    td {
+      color: var(--soft);
+    }
+
+    td a {
+      color: var(--green);
+      font-weight: 900;
+      text-decoration: none;
     }
 
     tr:last-child td {
       border-bottom: 0;
     }
 
-    td a {
-      color: var(--blue);
-      font-weight: 800;
-      text-decoration: none;
-    }
-
     .footer-cta {
-      background: var(--navy);
-      color: #ffffff;
-      border-radius: 10px;
-      padding: 24px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 18px;
       align-items: center;
-    }
-
-    .footer-cta h2 {
-      color: #ffffff;
-      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      background:
+        linear-gradient(135deg, rgba(34, 197, 94, 0.14), rgba(56, 189, 248, 0.08)),
+        var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: var(--shadow);
     }
 
     .footer-cta p {
-      color: rgba(255, 255, 255, 0.78);
-      max-width: 720px;
+      color: var(--muted);
+      max-width: 760px;
     }
 
     footer {
       color: var(--muted);
       text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
+      padding: 24px 0 36px;
+      font-size: 0.88rem;
     }
 
     .reveal {
@@ -593,184 +649,303 @@
       transform: translateY(0);
     }
 
-    @media (max-width: 880px) {
+    @media (max-width: 920px) {
+      .topbar,
+      .hero,
       .section-head,
       .footer-cta {
         grid-template-columns: 1fr;
       }
 
+      .topbar {
+        display: grid;
+      }
+
+      nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+      }
+
+      .tools-grid,
       .platform-grid,
-      .tool-grid,
-      .calculator-grid,
-      .guide-grid {
+      .guide-grid,
+      .claim-grid {
         grid-template-columns: 1fr;
       }
 
-      .calculator.featured {
+      .tool.wide {
         grid-column: span 1;
-      }
-
-      .hero {
-        min-height: auto;
-        padding-top: 28px;
-      }
-
-      .brand-row {
-        margin-bottom: 42px;
       }
     }
 
-    @media (max-width: 560px) {
-      .hero h1 {
-        font-size: 3.1rem;
+    @media (max-width: 620px) {
+      .shell {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .topbar {
+        margin-bottom: 36px;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 16vw, 3.4rem);
+      }
+
+      .brand span {
+        max-width: 280px;
+      }
+
+      .hero-copy p {
+        max-width: 330px;
       }
 
       .hero-actions,
-      .input-row,
-      .form-grid,
-      .metric-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-actions,
-      .input-row {
+      .calc-actions {
         flex-direction: column;
+        width: 100%;
       }
 
       .button,
-      .input-row button {
+      .calc-actions button {
         width: 100%;
+      }
+
+      .hero-actions .button,
+      .hero-panel {
+        max-width: calc(100vw - 24px);
+      }
+
+      .form-grid,
+      .form-grid.two,
+      .metric-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="brand-row">
+  <header class="shell">
+    <div class="topbar">
+      <div class="brand">
         <img src="logo.png" alt="PurePlays logo" class="logo">
         <div>
-          <div class="brand-name">PurePlays</div>
-          <div class="brand-sub">Verified links, platform notes, and daily check tools.</div>
+          <strong>PurePlays</strong>
+          <span>Tools, links, and math checks for sweeps + crypto casino players.</span>
+        </div>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#tools">Tools</a>
+        <a href="#daily">Daily</a>
+        <a href="#links">Links</a>
+        <a href="#guide">Guide</a>
+        <a href="#directory">Directory</a>
+      </nav>
+    </div>
+
+    <div class="hero">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">EV calculators + verified referral links</div>
+        <h1>PurePlays</h1>
+        <p>Check whether a bonus, VIP chase, or redemption path is actually worth it before you burn bankroll trying to clear it.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#tools">Open Calculators</a>
+          <a class="button button-secondary" href="#links">View Verified Links</a>
         </div>
       </div>
 
-      <div class="hero-copy reveal">
-        <div class="eyebrow">Transparent referral hub</div>
-        <h1>PurePlays</h1>
-        <p>One clean page for referral links, platform categories, daily-claim reminders, and safety checks before anyone signs up.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#verified-links">Open Verified Links</a>
-          <a class="button button-secondary" href="#tools">Use The Tools</a>
+      <aside class="hero-panel reveal">
+        <div class="panel-label">Verified links</div>
+        <div class="quick-grid">
+          <a class="quick-link" href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">
+            <div><strong>Stake.us</strong><span>U.S. sweeps: GC + Stake Cash</span></div>
+            <em>Open</em>
+          </a>
+          <a class="quick-link" href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">
+            <div><strong>Shuffle.us</strong><span>U.S. sweeps: GC + Shuffle Cash</span></div>
+            <em>Open</em>
+          </a>
+          <a class="quick-link" href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">
+            <div><strong>Winna.com</strong><span>Crypto casino + sportsbook</span></div>
+            <em>Open</em>
+          </a>
         </div>
-      </div>
+      </aside>
     </div>
   </header>
 
-  <nav aria-label="Primary">
-    <div class="nav-inner">
-      <a href="#verified-links">Verified Links</a>
-      <a href="#tools">Tools</a>
-      <a href="#guide">Platform Guide</a>
-      <a href="#directory">Directory</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
+  <main class="shell">
+    <section id="tools" class="reveal">
+      <div class="section-head">
+        <div>
+          <h2>Tools That Are Actually Useful</h2>
+          <p class="section-note">These calculators do not predict wins. They estimate expected cost, risk, and whether a promo or VIP chase is worth attempting.</p>
+        </div>
+        <p class="notice">This is informational math, not financial or gambling advice. Most casino games are negative EV unless a bonus, promo, rebate, or other edge changes the numbers.</p>
+      </div>
 
-  <main>
-    <section id="verified-links" class="reveal">
+      <div class="tools-grid">
+        <article class="tool wide">
+          <h3>Bonus EV Calculator</h3>
+          <p>Estimate whether a bonus is worth clearing after playthrough and house edge.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="bonusAmount">Bonus amount</label>
+              <input id="bonusAmount" type="number" min="0" step="0.01" value="25">
+            </div>
+            <div class="field">
+              <label for="playthroughMultiple">Playthrough multiple</label>
+              <input id="playthroughMultiple" type="number" min="0" step="0.1" value="1">
+            </div>
+            <div class="field">
+              <label for="bonusHouseEdge">House edge %</label>
+              <input id="bonusHouseEdge" type="number" min="0" step="0.01" value="3">
+            </div>
+            <div class="field">
+              <label for="currentBalance">Current balance</label>
+              <input id="currentBalance" type="number" min="0" step="0.01" value="0">
+            </div>
+            <div class="field">
+              <label for="redemptionMin">Redemption minimum</label>
+              <input id="redemptionMin" type="number" min="0" step="0.01" value="50">
+            </div>
+            <div class="field">
+              <label for="bonusWagerCap">Max comfortable wager</label>
+              <input id="bonusWagerCap" type="number" min="0" step="0.01" value="1">
+            </div>
+          </div>
+          <div class="calc-actions">
+            <button type="button" id="calcBonus">Calculate Bonus EV</button>
+            <button type="button" class="ghost" data-example="bonus">Load daily-claim example</button>
+          </div>
+          <div class="result" id="bonusResult"></div>
+        </article>
+
+        <article class="tool">
+          <h3>VIP Chase Cost Calculator</h3>
+          <p>See the expected cost of wagering toward the next VIP level.</p>
+          <div class="form-grid two">
+            <div class="field">
+              <label for="vipWagerNeeded">Wager needed</label>
+              <input id="vipWagerNeeded" type="number" min="0" step="1" value="10000">
+            </div>
+            <div class="field">
+              <label for="vipHouseEdge">House edge %</label>
+              <input id="vipHouseEdge" type="number" min="0" step="0.01" value="3">
+            </div>
+            <div class="field">
+              <label for="vipRewardRate">Rewards / rakeback %</label>
+              <input id="vipRewardRate" type="number" min="0" step="0.01" value="0.5">
+            </div>
+            <div class="field">
+              <label for="vipBonus">Expected level-up bonus</label>
+              <input id="vipBonus" type="number" min="0" step="0.01" value="0">
+            </div>
+          </div>
+          <div class="calc-actions">
+            <button type="button" id="calcVip">Calculate VIP Cost</button>
+          </div>
+          <div class="result" id="vipResult"></div>
+        </article>
+
+        <article class="tool">
+          <h3>Redemption Planner</h3>
+          <p>Estimate days and expected playthrough cost before a sweeps redemption.</p>
+          <div class="form-grid two">
+            <div class="field">
+              <label for="redeemBalance">Current SC balance</label>
+              <input id="redeemBalance" type="number" min="0" step="0.01" value="10">
+            </div>
+            <div class="field">
+              <label for="redeemMin">Redemption minimum</label>
+              <input id="redeemMin" type="number" min="0" step="0.01" value="50">
+            </div>
+            <div class="field">
+              <label for="dailyClaim">Daily claim amount</label>
+              <input id="dailyClaim" type="number" min="0" step="0.01" value="1">
+            </div>
+            <div class="field">
+              <label for="redeemEdge">Clearing house edge %</label>
+              <input id="redeemEdge" type="number" min="0" step="0.01" value="3">
+            </div>
+          </div>
+          <div class="calc-actions">
+            <button type="button" id="calcRedeem">Plan Redemption</button>
+          </div>
+          <div class="result" id="redeemResult"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="daily" class="reveal">
+      <div class="section-head">
+        <div>
+          <h2>Daily Claim Tracker</h2>
+          <p class="section-note">A lightweight tracker that resets by date and saves only in this browser.</p>
+        </div>
+      </div>
+
+      <div class="claim-grid">
+        <article class="claim-card">
+          <h3>Stake.us</h3>
+          <p>Mark this after checking your daily reward where available.</p>
+          <label><input type="checkbox" data-daily="stake"> Claimed / checked today</label>
+        </article>
+        <article class="claim-card">
+          <h3>Shuffle.us</h3>
+          <p>Mark this after checking your daily reward where available.</p>
+          <label><input type="checkbox" data-daily="shuffle"> Claimed / checked today</label>
+        </article>
+        <article class="claim-card">
+          <h3>Terms Check</h3>
+          <p>Offers and redemption rules change. Check the current platform terms before chasing anything.</p>
+          <label><input type="checkbox" data-daily="terms"> Terms checked today</label>
+        </article>
+      </div>
+      <div class="callout" id="dailyStatus">Daily tracker loading.</div>
+    </section>
+
+    <section id="links" class="reveal">
       <div class="section-head">
         <div>
           <h2>Verified PurePlays Links</h2>
-          <p class="section-note">Only real links currently provided by PurePlays are listed here. No placeholder buttons, no shortened links, and no hidden redirects.</p>
+          <p class="section-note">Only real referral links currently provided are clickable. No example links, no shorteners, no hidden redirects.</p>
         </div>
-        <p class="notice">This page contains affiliate/referral links. PurePlays may benefit if you sign up through them. Offers, eligibility, age limits, locations, and verification rules can change.</p>
+        <p class="notice">PurePlays may benefit if you sign up through these links. Availability depends on age, location, verification, account status, and each platform's terms.</p>
       </div>
 
       <div class="platform-grid">
         <article class="platform">
           <div class="tag-row">
-            <span class="tag">U.S. sweepstakes</span>
-            <span class="tag">Gold Coins</span>
+            <span class="tag green">U.S. sweeps</span>
+            <span class="tag gold">Gold Coins</span>
             <span class="tag">Stake Cash</span>
           </div>
           <h3>Stake.us</h3>
           <p>Social sweepstakes casino for eligible U.S. users. Uses Gold Coins for standard play and Stake Cash for promotional sweepstakes play.</p>
-          <ul class="fact-list">
-            <li>Use the full browser link for referral tracking.</li>
-            <li>Eligibility depends on state, age, verification, and terms.</li>
-            <li>Do not use a VPN or fake location.</li>
-          </ul>
-          <a class="button" href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Stake.us</a>
+          <a class="primary-link" href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Stake.us</a>
         </article>
 
         <article class="platform">
           <div class="tag-row">
-            <span class="tag">U.S. sweepstakes</span>
-            <span class="tag">Gold Coins</span>
+            <span class="tag green">U.S. sweeps</span>
+            <span class="tag gold">Gold Coins</span>
             <span class="tag">Shuffle Cash</span>
           </div>
           <h3>Shuffle.us</h3>
-          <p>Social sweepstakes casino for eligible U.S. users. Uses Gold Coins and Shuffle Cash, with verification requirements for current welcome offers.</p>
-          <ul class="fact-list">
-            <li>Shuffle help docs list a welcome bonus after email and level 1 verification.</li>
-            <li>Eligibility depends on state, age, verification, and terms.</li>
-            <li>Do not use a VPN or fake location.</li>
-          </ul>
-          <a class="button" href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Shuffle.us</a>
+          <p>Social sweepstakes casino for eligible U.S. users. Uses Gold Coins and Shuffle Cash, with eligibility and verification requirements.</p>
+          <a class="primary-link" href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Shuffle.us</a>
         </article>
 
         <article class="platform">
           <div class="tag-row">
-            <span class="tag crypto">Crypto casino</span>
-            <span class="tag crypto">Sportsbook</span>
-            <span class="tag warn">Not sweeps</span>
+            <span class="tag">Crypto casino</span>
+            <span class="tag">Sportsbook</span>
+            <span class="tag gold">Not sweeps</span>
           </div>
           <h3>Winna.com</h3>
-          <p>Crypto casino and sportsbook. This is not a Gold Coin or sweepstakes-currency site; deposits and withdrawals use supported crypto rails.</p>
-          <ul class="fact-list">
-            <li>Winna help docs list BTC, ETH, LTC, USDT, USDC, SOL, TRX, BNB, and DOGE support.</li>
-            <li>Crypto withdrawals are irreversible.</li>
-            <li>Check local laws and platform terms before using.</li>
-          </ul>
-          <a class="button" href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Winna.com</a>
-        </article>
-      </div>
-    </section>
-
-    <section id="tools" class="reveal">
-      <div class="section-head">
-        <div>
-          <h2>Tools Worth Coming Back For</h2>
-          <p class="section-note">Simple tools that help visitors remember daily claims, understand platform types, and avoid confusing sweepstakes currency with crypto balances.</p>
-        </div>
-        <p class="notice">Tools are stored in this browser only. They do not submit your information anywhere.</p>
-      </div>
-
-      <div class="tool-grid">
-        <article class="tool">
-          <h3>Daily Claim Checklist</h3>
-          <p>Track whether you already checked each daily-reward style platform today.</p>
-          <div class="checklist" id="dailyChecklist">
-            <label class="check-item"><input type="checkbox" data-daily="stake"> Stake.us daily check</label>
-            <label class="check-item"><input type="checkbox" data-daily="shuffle"> Shuffle.us daily check</label>
-            <label class="check-item"><input type="checkbox" data-daily="terms"> Checked current terms before playing</label>
-          </div>
-          <div class="result" id="dailyStatus">Checklist resets automatically when the date changes.</div>
-        </article>
-
-        <article class="tool">
-          <h3>SC / Coin Notes</h3>
-          <p>Quick reminder so sweepstakes currency and crypto casino balances do not get mixed up.</p>
-          <div class="result good">
-            <strong>Gold Coins:</strong> standard play/entertainment currency on sweepstakes sites.
-          </div>
-          <div class="result good">
-            <strong>SC / Shuffle Cash:</strong> sweepstakes-style currency subject to eligibility, verification, and redemption rules.
-          </div>
-          <div class="result warn">
-            <strong>Crypto:</strong> deposit/withdrawal rails on crypto casino sites. Transactions can be irreversible.
-          </div>
+          <p>Crypto casino and sportsbook. Not a Gold Coin / SC sweepstakes platform. Check local law, wallet details, KYC, and withdrawal rules.</p>
+          <a class="primary-link" href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open Winna.com</a>
         </article>
       </div>
     </section>
@@ -778,32 +953,23 @@
     <section id="guide" class="reveal">
       <div class="section-head">
         <div>
-          <h2>Know The Platform Type</h2>
-          <p class="section-note">A clean split prevents bad expectations and keeps the page more trustworthy.</p>
+          <h2>Quick Platform Guide</h2>
+          <p class="section-note">The most important thing is not mixing up social sweepstakes sites with crypto casino/sportsbook sites.</p>
         </div>
       </div>
 
       <div class="guide-grid">
-        <article class="guide-panel">
-          <h3>U.S. Sweepstakes Casino</h3>
-          <p>Examples currently listed here: Stake.us and Shuffle.us.</p>
-          <ul>
-            <li>Uses virtual coins, usually Gold Coins plus a sweepstakes-style currency.</li>
-            <li>Availability depends on state, age, identity verification, and platform terms.</li>
-            <li>Do not describe these as guaranteed income or guaranteed cash.</li>
-            <li>Do not use a VPN to bypass location restrictions.</li>
-          </ul>
+        <article class="guide">
+          <h3>U.S. Sweeps</h3>
+          <p>Stake.us and Shuffle.us use Gold Coins plus sweepstakes-style currency. Availability, verification, redemption, and age rules apply.</p>
         </article>
-
-        <article class="guide-panel">
-          <h3>Crypto Casino / Sportsbook</h3>
-          <p>Example currently listed here: Winna.com.</p>
-          <ul>
-            <li>Not the same as a Gold Coin / SC sweepstakes platform.</li>
-            <li>May involve crypto deposits and crypto withdrawals.</li>
-            <li>Access can be restricted by country, state, age, sanctions, and platform terms.</li>
-            <li>Crypto wallet addresses and withdrawals must be checked carefully.</li>
-          </ul>
+        <article class="guide">
+          <h3>Crypto Casino</h3>
+          <p>Winna.com uses crypto rails and is not a sweeps coin site. Crypto withdrawals can be irreversible.</p>
+        </article>
+        <article class="guide">
+          <h3>Stake.com</h3>
+          <p>Not listed yet because the exact PurePlays referral URL has not been provided. It should not be treated as a U.S. offer.</p>
         </article>
       </div>
     </section>
@@ -811,8 +977,8 @@
     <section id="directory" class="reveal">
       <div class="section-head">
         <div>
-          <h2>Reference Directory</h2>
-          <p class="section-note">A practical list for research. Only the platforms with confirmed PurePlays links are clickable.</p>
+          <h2>Directory</h2>
+          <p class="section-note">A compact reference table. Only confirmed PurePlays referral links are clickable.</p>
         </div>
       </div>
 
@@ -822,8 +988,8 @@
             <tr>
               <th>Platform</th>
               <th>Type</th>
-              <th>Useful Note</th>
-              <th>PurePlays Link</th>
+              <th>Useful note</th>
+              <th>Link</th>
             </tr>
           </thead>
           <tbody>
@@ -831,65 +997,156 @@
               <td>Stake.us</td>
               <td>U.S. sweepstakes casino</td>
               <td>Gold Coins plus Stake Cash. Check current welcome offer, daily rewards, state availability, and redemption terms.</td>
-              <td><a href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open link</a></td>
+              <td><a href="https://stake.us/?c=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open</a></td>
             </tr>
             <tr>
               <td>Shuffle.us</td>
               <td>U.S. sweepstakes casino</td>
-              <td>Gold Coins plus Shuffle Cash. Check current welcome offer, verification requirements, state availability, and redemption terms.</td>
-              <td><a href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open link</a></td>
+              <td>Gold Coins plus Shuffle Cash. Check current welcome offer, verification, state availability, and redemption terms.</td>
+              <td><a href="https://shuffle.us?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open</a></td>
             </tr>
             <tr>
               <td>Winna.com</td>
               <td>Crypto casino / sportsbook</td>
-              <td>Crypto casino and sportsbook. Not a sweepstakes coin site. Check jurisdiction, wallet, KYC, and withdrawal rules.</td>
-              <td><a href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open link</a></td>
-            </tr>
-            <tr>
-              <td>Stake.com</td>
-              <td>Crypto casino / sportsbook</td>
-              <td>Not a U.S. offer. Stake.com's terms list the United States and other locations as prohibited jurisdictions.</td>
-              <td>Not listed until exact PurePlays referral URL is provided.</td>
-            </tr>
-            <tr>
-              <td>High 5 Casino</td>
-              <td>Sweepstakes casino</td>
-              <td>Research current offer, states, AMOE, and redemption rules before adding any link.</td>
-              <td>No current PurePlays link listed.</td>
-            </tr>
-            <tr>
-              <td>Freecash</td>
-              <td>Rewards / offerwall</td>
-              <td>Research current referral terms, offer tracking rules, device restrictions, and payout methods before adding any link.</td>
-              <td>No current PurePlays link listed.</td>
-            </tr>
-            <tr>
-              <td>Swagbucks</td>
-              <td>Rewards / surveys / cashback</td>
-              <td>Research current referral rules, tracking limits, and eligible countries before adding any link.</td>
-              <td>No current PurePlays link listed.</td>
+              <td>Not a sweepstakes coin site. Check jurisdiction, wallet, KYC, and withdrawal rules.</td>
+              <td><a href="https://winna.com/?r=PurePlays" target="_blank" rel="sponsored noopener noreferrer">Open</a></td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section id="contact" class="reveal">
+    <section class="reveal">
       <div class="footer-cta">
         <div>
-          <h2>Use the full link. Check the terms.</h2>
-          <p>PurePlays keeps the directory focused on plain links, platform categories, and realistic notes. No DMs are required to access the listed offers.</p>
+          <h2>Use the tools first.</h2>
+          <p>PurePlays is designed to help users check EV, expected cost, redemption paths, and platform type before clicking any offer.</p>
         </div>
-        <a class="button button-primary" href="#verified-links">Back To Links</a>
+        <a class="button button-primary" href="#tools">Back To Tools</a>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>This page contains affiliate/referral links. © 2026 PurePlays.</p>
+  <footer class="shell">
+    <p>This page contains affiliate/referral links. PurePlays may benefit if you sign up. No calculator predicts future wins.</p>
   </footer>
 
   <script>
+    const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+    const pct = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
+
+    function value(id) {
+      return Number(document.getElementById(id).value || 0);
+    }
+
+    function dollars(n) {
+      if (!Number.isFinite(n)) return "$0.00";
+      return money.format(n);
+    }
+
+    function metric(label, val) {
+      return `<div class="metric"><span>${label}</span><strong>${val}</strong></div>`;
+    }
+
+    function verdictClass(net) {
+      if (net > 0) return "good";
+      if (net < 0) return "bad";
+      return "warn";
+    }
+
+    function calculateBonus() {
+      const bonus = value("bonusAmount");
+      const multiple = value("playthroughMultiple");
+      const edge = value("bonusHouseEdge") / 100;
+      const balance = value("currentBalance");
+      const redemptionMin = value("redemptionMin");
+      const wagerCap = value("bonusWagerCap");
+      const requiredWager = bonus * multiple;
+      const expectedLoss = requiredWager * edge;
+      const expectedValue = bonus - expectedLoss;
+      const expectedFinal = balance + expectedValue;
+      const canReachMin = expectedFinal >= redemptionMin;
+      const suggestedUnit = wagerCap > 0 ? Math.min(wagerCap, Math.max(0.01, (balance + bonus) * 0.01)) : Math.max(0.01, (balance + bonus) * 0.01);
+      const cls = verdictClass(expectedValue);
+      const text = expectedValue > 0
+        ? "Positive estimated promo value before variance. Still check the current terms and redemption rules."
+        : "Negative estimated value at these inputs. This bonus may cost more to clear than it is worth.";
+
+      document.getElementById("bonusResult").innerHTML = `
+        <div class="metric-grid">
+          ${metric("Required wager", dollars(requiredWager))}
+          ${metric("Expected loss", dollars(expectedLoss))}
+          ${metric("Expected bonus EV", dollars(expectedValue))}
+          ${metric("Expected final balance", dollars(expectedFinal))}
+          ${metric("Redemption minimum", dollars(redemptionMin))}
+          ${metric("Suggested unit cap", dollars(suggestedUnit))}
+        </div>
+        <div class="callout ${cls}">${text} ${canReachMin ? "Expected balance clears the redemption minimum." : "Expected balance does not reach the redemption minimum yet."}</div>
+      `;
+    }
+
+    function calculateVip() {
+      const wager = value("vipWagerNeeded");
+      const edge = value("vipHouseEdge") / 100;
+      const rewardRate = value("vipRewardRate") / 100;
+      const bonus = value("vipBonus");
+      const expectedLoss = wager * edge;
+      const expectedRewards = wager * rewardRate + bonus;
+      const net = expectedRewards - expectedLoss;
+      const cls = verdictClass(net);
+      const text = net >= 0
+        ? "The entered rewards cover the estimated house-edge cost. Variance and withdrawal limits still matter."
+        : "The VIP chase is negative at these inputs. Chasing the level likely costs more than the reward is worth.";
+
+      document.getElementById("vipResult").innerHTML = `
+        <div class="metric-grid">
+          ${metric("Expected loss", dollars(expectedLoss))}
+          ${metric("Expected rewards", dollars(expectedRewards))}
+          ${metric("Net estimate", dollars(net))}
+        </div>
+        <div class="callout ${cls}">${text}</div>
+      `;
+    }
+
+    function calculateRedeem() {
+      const balance = value("redeemBalance");
+      const min = value("redeemMin");
+      const daily = value("dailyClaim");
+      const edge = value("redeemEdge") / 100;
+      const remaining = Math.max(0, min - balance);
+      const days = daily > 0 ? Math.ceil(remaining / daily) : Infinity;
+      const clearingLoss = balance * edge;
+      const expectedAfterClear = Math.max(0, balance - clearingLoss);
+      const cls = remaining === 0 ? "good" : "warn";
+      const dayText = Number.isFinite(days) ? `${days} day${days === 1 ? "" : "s"}` : "No daily claim entered";
+
+      document.getElementById("redeemResult").innerHTML = `
+        <div class="metric-grid">
+          ${metric("Amount to minimum", dollars(remaining))}
+          ${metric("Days from claims", dayText)}
+          ${metric("Estimated clear cost", dollars(clearingLoss))}
+          ${metric("After clear estimate", dollars(expectedAfterClear))}
+          ${metric("Redemption minimum", dollars(min))}
+          ${metric("Current balance", dollars(balance))}
+        </div>
+        <div class="callout ${cls}">${remaining === 0 ? "You are at or above the entered redemption minimum before considering playthrough rules." : "Keep collecting if you are not depositing. Do not chase redemption if clearing costs exceed the value."}</div>
+      `;
+    }
+
+    document.getElementById("calcBonus").addEventListener("click", calculateBonus);
+    document.getElementById("calcVip").addEventListener("click", calculateVip);
+    document.getElementById("calcRedeem").addEventListener("click", calculateRedeem);
+
+    document.querySelector("[data-example='bonus']").addEventListener("click", () => {
+      document.getElementById("bonusAmount").value = 25;
+      document.getElementById("playthroughMultiple").value = 1;
+      document.getElementById("bonusHouseEdge").value = 3;
+      document.getElementById("currentBalance").value = 0;
+      document.getElementById("redemptionMin").value = 50;
+      document.getElementById("bonusWagerCap").value = 1;
+      calculateBonus();
+    });
+
     const todayKey = new Date().toISOString().slice(0, 10);
     const dailyKey = `pureplays-daily-${todayKey}`;
     const dailyInputs = Array.from(document.querySelectorAll("[data-daily]"));
@@ -904,15 +1161,14 @@
         if (input.checked) checked += 1;
       });
       localStorage.setItem(dailyKey, JSON.stringify(current));
-      dailyStatus.textContent = `${checked} of ${dailyInputs.length} daily checks marked complete for today.`;
-      dailyStatus.className = checked === dailyInputs.length ? "result good" : "result";
+      dailyStatus.textContent = `${checked} of ${dailyInputs.length} daily checks complete today.`;
+      dailyStatus.className = checked === dailyInputs.length ? "callout good" : "callout";
     }
 
     dailyInputs.forEach((input) => {
       input.checked = Boolean(savedDaily[input.dataset.daily]);
       input.addEventListener("change", updateDailyStatus);
     });
-    updateDailyStatus();
 
     const revealItems = Array.from(document.querySelectorAll(".reveal"));
     const observer = new IntersectionObserver((entries) => {
@@ -922,9 +1178,14 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
 
     revealItems.forEach((item) => observer.observe(item));
+
+    calculateBonus();
+    calculateVip();
+    calculateRedeem();
+    updateDailyStatus();
   </script>
 </body>
 </html>
