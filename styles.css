@@ -966,6 +966,40 @@ td {
 
   .nav-card {
     padding: 12px;
+    overflow: hidden;
+  }
+
+  .nav-center {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px 22px;
+    overflow: hidden;
+  }
+
+  .nav-link {
+    padding-top: 8px;
+    padding-bottom: 10px;
+  }
+
+  .nav-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    justify-items: stretch;
+  }
+
+  .nav-actions .button,
+  .nav-actions .sign-in {
+    width: 100%;
+  }
+
+  .sign-in {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .brand span {
@@ -983,7 +1017,31 @@ td {
   }
 
   .hero-copy h1 {
-    font-size: clamp(3.1rem, 16vw, 4.4rem);
+    font-size: clamp(3rem, 15vw, 3.7rem);
+    max-width: 100%;
+  }
+
+  .hero-copy,
+  .hero-copy p {
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-section {
+    padding-left: 18px;
+    padding-right: 18px;
+    overflow: hidden;
+  }
+
+  .hero-buttons,
+  .trust-row,
+  .tool-card,
+  .optimizer-shell,
+  .site-picker-section,
+  .section-heading {
+    width: 100%;
+    max-width: 100%;
   }
 
   .hero-buttons,

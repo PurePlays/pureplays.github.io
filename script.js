@@ -32,12 +32,28 @@ const SITE_PRESETS = [
     friction: 14
   },
   {
+    id: "winna",
+    name: "Winna.com",
+    type: "Crypto casino / sportsbook",
+    initial: "W",
+    selected: false,
+    affiliate: "https://winna.com/?r=PurePlays",
+    dailies: 0,
+    codes: 8,
+    freebies: 0,
+    offers: 20,
+    vip: 8,
+    giveaways: 5,
+    minutes: 3,
+    friction: 18
+  },
+  {
     id: "chumba",
     name: "Chumba Casino",
     type: "Sweeps + AMOE",
     initial: "C",
     selected: true,
-    affiliate: "#",
+    affiliate: "",
     dailies: 30,
     codes: 4,
     freebies: 12,
@@ -53,7 +69,7 @@ const SITE_PRESETS = [
     type: "Sweeps + AMOE",
     initial: "L",
     selected: true,
-    affiliate: "#",
+    affiliate: "",
     dailies: 25,
     codes: 4,
     freebies: 10,
@@ -69,7 +85,7 @@ const SITE_PRESETS = [
     type: "Sweeps",
     initial: "CC",
     selected: true,
-    affiliate: "#",
+    affiliate: "",
     dailies: 20,
     codes: 8,
     freebies: 10,
@@ -85,7 +101,7 @@ const SITE_PRESETS = [
     type: "Sweeps",
     initial: "M",
     selected: false,
-    affiliate: "#",
+    affiliate: "",
     dailies: 20,
     codes: 6,
     freebies: 8,
@@ -101,7 +117,7 @@ const SITE_PRESETS = [
     type: "Sweeps",
     initial: "H5",
     selected: false,
-    affiliate: "#",
+    affiliate: "",
     dailies: 15,
     codes: 5,
     freebies: 8,
@@ -117,7 +133,7 @@ const SITE_PRESETS = [
     type: "Sweeps",
     initial: "P",
     selected: false,
-    affiliate: "#",
+    affiliate: "",
     dailies: 15,
     codes: 5,
     freebies: 8,
@@ -133,7 +149,7 @@ const SITE_PRESETS = [
     type: "Sweeps",
     initial: "Mc",
     selected: false,
-    affiliate: "#",
+    affiliate: "",
     dailies: 15,
     codes: 5,
     freebies: 8,
@@ -149,7 +165,7 @@ const SITE_PRESETS = [
     type: "Sweeps",
     initial: "W",
     selected: false,
-    affiliate: "#",
+    affiliate: "",
     dailies: 15,
     codes: 5,
     freebies: 8,
@@ -165,7 +181,7 @@ const SITE_PRESETS = [
     type: "Sweeps",
     initial: "Z",
     selected: false,
-    affiliate: "#",
+    affiliate: "",
     dailies: 15,
     codes: 4,
     freebies: 7,
@@ -181,7 +197,7 @@ const SITE_PRESETS = [
     type: "Sweeps",
     initial: "R",
     selected: false,
-    affiliate: "#",
+    affiliate: "",
     dailies: 15,
     codes: 4,
     freebies: 7,
@@ -486,7 +502,7 @@ function renderRanking(sites, amoe) {
         <td><strong>${money.format(site.net)}</strong></td>
         <td>${num.format(site.minutes / 60)} hrs/mo</td>
         <td><span class="score-pill">${Math.round(site.score)}</span></td>
-        <td><a class="link-button" href="${site.affiliate}" target="_blank" rel="sponsored noopener noreferrer">${site.affiliate === "#" ? "Pending" : "Open"}</a></td>
+        <td>${site.affiliate ? `<a class="link-button" href="${site.affiliate}" target="_blank" rel="sponsored noopener noreferrer">Open</a>` : `<span class="link-button pending">No link</span>`}</td>
       </tr>
     `).join("");
 
@@ -648,8 +664,8 @@ function scenarioValues(total) {
 
 function affiliateReadySites(calculatedSites) {
   const known = calculatedSites.filter((site) => site.affiliate && site.affiliate !== "#");
-  const placeholders = calculatedSites.filter((site) => !site.affiliate || site.affiliate === "#");
-  return [...known.sort((a, b) => b.score - a.score), ...placeholders.sort((a, b) => b.score - a.score)];
+  const unlinked = calculatedSites.filter((site) => !site.affiliate || site.affiliate === "#");
+  return [...known.sort((a, b) => b.score - a.score), ...unlinked.sort((a, b) => b.score - a.score)];
 }
 
 function renderGapCards(total, goal, selectedSites, amoe, methods) {
@@ -680,7 +696,7 @@ function renderGapCards(total, goal, selectedSites, amoe, methods) {
     cards.push({
       title: `Add ${bestAdd.name}`,
       gain: `+${money.format(bestAdd.net)}/mo`,
-      text: `Best next site based on your selected methods. ${bestAdd.affiliate !== "#" ? "Can route through your PurePlays link." : "Coming soon."}`
+      text: `Best next site based on your selected methods. ${bestAdd.affiliate ? "Can route through your PurePlays link." : "Track it here even when PurePlays does not have a link."}`
     });
   }
 
@@ -748,7 +764,7 @@ function renderRecommendedSites(calculatedSites) {
         <div class="gain">${money.format(site.net)}/mo</div>
         <p>Why it fits: ${methods}. Estimated time is ${num.format(site.minutes / 60)} hrs/month at current assumptions.</p>
         <div class="rec-buttons">
-          <a class="join-button" href="${hasLink ? site.affiliate : "#sites"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? "Join via PurePlays" : "Coming soon"}</a>
+          ${hasLink ? `<a class="join-button" href="${site.affiliate}" target="_blank" rel="sponsored noopener noreferrer">Join via PurePlays</a>` : `<span class="join-button pending">No PurePlays link</span>`}
           <a class="secondary-button" href="#sites">Adjust assumptions</a>
         </div>
       </article>
@@ -920,10 +936,13 @@ function renderRecommendedSetup(total, goal, calculatedSites, amoe, methods) {
     text.textContent = `Start with ${bestNames}.`;
   }
 
-  buttons.innerHTML = best.slice(0, 2).map((site) => {
-    const hasLink = site.affiliate && site.affiliate !== "#";
-    return `<a href="${hasLink ? site.affiliate : "#sites"}" class="${hasLink ? "" : "pending"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? `Join ${site.name}` : `${site.name}: coming soon`}</a>`;
-  }).join("") + `<a href="#sites">Edit selected sites</a>`;
+  const linkedButtons = best
+    .filter((site) => site.affiliate && site.affiliate !== "#")
+    .slice(0, 2)
+    .map((site) => `<a href="${site.affiliate}" target="_blank" rel="sponsored noopener noreferrer">Join ${site.name}</a>`)
+    .join("");
+
+  buttons.innerHTML = `${linkedButtons}<a href="#sites">Edit selected sites</a>`;
 }
 
 function renderMoneyLeft(total, goal, methods, amoe) {
@@ -1068,7 +1087,7 @@ function renderRecommendedSites(calculatedSites) {
         <div class="gain">${money.format(site.net)}/mo</div>
         <p>Why it fits: ${methods}. Estimated time is ${num.format(site.minutes / 60)} hrs/month at current assumptions.</p>
         <div class="rec-buttons">
-          <a class="join-button ${hasLink ? "" : "pending"}" href="${hasLink ? site.affiliate : "#sites"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? "Join via PurePlays" : "Coming soon"}</a>
+          ${hasLink ? `<a class="join-button" href="${site.affiliate}" target="_blank" rel="sponsored noopener noreferrer">Join via PurePlays</a>` : `<span class="join-button pending">No PurePlays link</span>`}
           <a class="secondary-button" href="#sites">Adjust assumptions</a>
         </div>
       </article>
@@ -1088,7 +1107,7 @@ function renderRanking(sites, amoe) {
         <td><strong>${money.format(site.net)}</strong></td>
         <td>${num.format(site.minutes / 60)} hrs/mo</td>
         <td><span class="score-pill">${Math.round(site.score)}</span></td>
-        <td><a class="link-button ${hasLink ? "" : "pending"}" href="${hasLink ? site.affiliate : "#sites"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? "Join" : "Soon"}</a></td>
+        <td>${hasLink ? `<a class="link-button" href="${site.affiliate}" target="_blank" rel="sponsored noopener noreferrer">Join</a>` : `<span class="link-button pending">No link</span>`}</td>
       </tr>
     `}).join("");
 
