@@ -1,208 +1,202 @@
 /**
  * PurePlays Dashboard - Interactive Calculators & Tracker
- * Bonus EV, VIP Chase Cost, Redemption Planning, and Daily Claim Tracking
+ * Handles Bonus EV, VIP Chase Cost, Redemption Planning, Daily Claim Tracking,
+ * scroll reveal animations, and active navigation state.
  */
 
-// Utility: Format currency
+const STORAGE_PREFIX = 'dailyTracker_';
+
+const moneyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
 function formatCurrency(value) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
+  const number = Number(value);
+  return moneyFormatter.format(Number.isFinite(number) ? number : 0);
 }
 
-// Utility: Format percentage
 function formatPercent(value) {
-  return value.toFixed(2) + '%';
+  const number = Number(value);
+  return `${(Number.isFinite(number) ? number : 0).toFixed(2)}%`;
+}
+
+function getNumber(id) {
+  const element = document.getElementById(id);
+  if (!element) return 0;
+
+  const value = Number.parseFloat(element.value);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function setValue(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.value = value;
+}
+
+function showResult(elementId, html, isSuccess = true) {
+  const resultElement = document.getElementById(elementId);
+  if (!resultElement) return;
+
+  resultElement.innerHTML = html;
+  resultElement.classList.toggle('error', !isSuccess);
+}
+
+function metric(label, value) {
+  return `
+    <div class="metric">
+      <span>${label}</span>
+      <strong>${value}</strong>
+    </div>
+  `;
+}
+
+function recommendationLabel(className, label) {
+  return `<strong>${label}</strong>`;
 }
 
 // ============================================================================
 // BONUS EV CALCULATOR
 // ============================================================================
 
-document.getElementById('calcBonus').addEventListener('click', calculateBonus);
-
 function calculateBonus() {
-  const bonusAmount = parseFloat(document.getElementById('bonusAmount').value) || 0;
-  const playthroughMultiple = parseFloat(document.getElementById('playthroughMultiple').value) || 0;
-  const bonusHouseEdge = parseFloat(document.getElementById('bonusHouseEdge').value) || 0;
-  const currentBalance = parseFloat(document.getElementById('currentBalance').value) || 0;
-  const redemptionMin = parseFloat(document.getElementById('redemptionMin').value) || 0;
-  const bonusWagerCap = parseFloat(document.getElementById('bonusWagerCap').value) || 0;
+  const bonusAmount = getNumber('bonusAmount');
+  const playthroughMultiple = getNumber('playthroughMultiple');
+  const bonusHouseEdge = getNumber('bonusHouseEdge');
+  const currentBalance = getNumber('currentBalance');
+  const redemptionMin = getNumber('redemptionMin');
+  const bonusWagerCap = getNumber('bonusWagerCap');
 
-  // Validation
   if (bonusAmount <= 0) {
-    showResult('bonusResult', '<div class="callout bad"><strong>Invalid Input</strong> Bonus amount must be greater than 0.</div>', false);
+    showResult(
+      'bonusResult',
+      '<div class="callout bad"><strong>Invalid input</strong> Bonus amount must be greater than $0.</div>',
+      false
+    );
     return;
   }
 
-  // Calculate playthrough requirement
-  const playthroughRequired = bonusAmount * playthroughMultiple;
-  
-  // Calculate expected loss from house edge
-  const houseEdgeLoss = playthroughRequired * (bonusHouseEdge / 100);
-  
-  // Net value after playthrough
-  const netValue = bonusAmount - houseEdgeLoss;
-  
-  // Balance after bonus clearing
-  const balanceAfterClearing = currentBalance + netValue;
-  
-  // Check if reachable for redemption
-  const canRedeem = balanceAfterClearing >= redemptionMin;
-  const shortfall = Math.max(0, redemptionMin - balanceAfterClearing);
-
-  // ROI calculation
-  const roi = playthroughRequired > 0 ? ((netValue / playthroughRequired) * 100) : 0;
-
-  // Recommendation
-  let recommendation = 'warn';
-  let message = '';
-  
-  if (roi < -50) {
-    recommendation = 'bad';
-    message = 'This bonus is unlikely to be worth clearing. High house edge relative to playthrough.';
-  } else if (roi < 0) {
-    recommendation = 'warn';
-    message = 'Negative EV. Only attempt if you plan to play anyway for entertainment.';
-  } else if (roi >= 0 && roi < 10) {
-    recommendation = 'warn';
-    message = 'Low positive value. Consider your bankroll and entertainment preference.';
-  } else {
-    recommendation = 'good';
-    message = 'Positive EV bonus. Worth considering if you meet the conditions.';
+  if (playthroughMultiple < 0 || bonusHouseEdge < 0 || currentBalance < 0 || redemptionMin < 0 || bonusWagerCap < 0) {
+    showResult(
+      'bonusResult',
+      '<div class="callout bad"><strong>Invalid input</strong> Values cannot be negative.</div>',
+      false
+    );
+    return;
   }
 
-  // Build result HTML
+  const playthroughRequired = bonusAmount * playthroughMultiple;
+  const houseEdgeLoss = playthroughRequired * (bonusHouseEdge / 100);
+  const netValue = bonusAmount - houseEdgeLoss;
+  const balanceAfterClearing = currentBalance + netValue;
+  const canRedeem = balanceAfterClearing >= redemptionMin;
+  const shortfall = Math.max(0, redemptionMin - balanceAfterClearing);
+  const roi = playthroughRequired > 0 ? (netValue / playthroughRequired) * 100 : 0;
+
+  let recommendation = 'warn';
+  let label = '⚠ Fair Value';
+  let message = 'Low or uncertain value. Check terms, playthrough rules, max cashout, and eligible games before attempting.';
+
+  if (netValue < 0) {
+    recommendation = 'bad';
+    label = '✗ Negative EV';
+    message = 'Expected loss is higher than the bonus value at these inputs.';
+  } else if (netValue > 0 && roi >= 1) {
+    recommendation = 'good';
+    label = '✓ Positive EV';
+    message = 'Positive estimated promo value before variance. Still verify current terms and redemption rules.';
+  }
+
   const resultHTML = `
     <div class="metric-grid">
-      <div class="metric">
-        <span>Playthrough Required</span>
-        <strong>${formatCurrency(playthroughRequired)}</strong>
-      </div>
-      <div class="metric">
-        <span>Expected House Edge Loss</span>
-        <strong>${formatCurrency(houseEdgeLoss)}</strong>
-      </div>
-      <div class="metric">
-        <span>Net Bonus Value</span>
-        <strong>${formatCurrency(netValue)}</strong>
-      </div>
-      <div class="metric">
-        <span>ROI</span>
-        <strong>${formatPercent(roi)}</strong>
-      </div>
-      <div class="metric">
-        <span>Balance After Clearing</span>
-        <strong>${formatCurrency(balanceAfterClearing)}</strong>
-      </div>
-      <div class="metric">
-        <span>Redemption Eligible?</span>
-        <strong>${canRedeem ? '✓ Yes' : '✗ No'}</strong>
-      </div>
+      ${metric('Playthrough Required', formatCurrency(playthroughRequired))}
+      ${metric('Expected House Edge Loss', formatCurrency(houseEdgeLoss))}
+      ${metric('Net Bonus Value', formatCurrency(netValue))}
+      ${metric('ROI', formatPercent(roi))}
+      ${metric('Balance After Clearing', formatCurrency(balanceAfterClearing))}
+      ${metric('Max Comfortable Wager', formatCurrency(bonusWagerCap))}
     </div>
-    ${shortfall > 0 ? `<div class="callout warn"><strong>Shortfall</strong> You'd need ${formatCurrency(shortfall)} more to reach redemption minimum.</div>` : ''}
+    ${shortfall > 0 ? `<div class="callout warn"><strong>Shortfall</strong> You would need ${formatCurrency(shortfall)} more to reach the entered redemption minimum.</div>` : ''}
     <div class="callout ${recommendation}">
-      <strong>${recommendation === 'good' ? '✓ Good EV' : recommendation === 'warn' ? '⚠ Fair Value' : '✗ Poor Value'}</strong>
-      ${message}
+      ${recommendationLabel(recommendation, label)}
+      ${message} ${canRedeem ? 'The estimated balance reaches the entered redemption minimum.' : 'The estimated balance does not reach the entered redemption minimum.'}
     </div>
   `;
 
   showResult('bonusResult', resultHTML, true);
 }
 
-// Load bonus example
-document.querySelector('[data-example="bonus"]').addEventListener('click', () => {
-  document.getElementById('bonusAmount').value = '50';
-  document.getElementById('playthroughMultiple').value = '25';
-  document.getElementById('bonusHouseEdge').value = '2.5';
-  document.getElementById('currentBalance').value = '100';
-  document.getElementById('redemptionMin').value = '500';
+function loadBonusExample() {
+  setValue('bonusAmount', '25');
+  setValue('playthroughMultiple', '1');
+  setValue('bonusHouseEdge', '3');
+  setValue('currentBalance', '0');
+  setValue('redemptionMin', '50');
+  setValue('bonusWagerCap', '1');
   calculateBonus();
-});
-
-// Reset bonus form
-document.getElementById('calcBonus').closest('.tool').addEventListener('reset', function() {
-  setTimeout(() => {
-    clearFormErrors(this);
-    document.getElementById('bonusResult').innerHTML = '';
-  }, 0);
-});
+}
 
 // ============================================================================
 // VIP CHASE COST CALCULATOR
 // ============================================================================
 
-document.getElementById('calcVip').addEventListener('click', calculateVip);
-
 function calculateVip() {
-  const vipWagerNeeded = parseFloat(document.getElementById('vipWagerNeeded').value) || 0;
-  const vipHouseEdge = parseFloat(document.getElementById('vipHouseEdge').value) || 0;
-  const vipRewardRate = parseFloat(document.getElementById('vipRewardRate').value) || 0;
-  const vipBonus = parseFloat(document.getElementById('vipBonus').value) || 0;
+  const vipWagerNeeded = getNumber('vipWagerNeeded');
+  const vipHouseEdge = getNumber('vipHouseEdge');
+  const vipRewardRate = getNumber('vipRewardRate');
+  const vipBonus = getNumber('vipBonus');
 
-  // Validation
   if (vipWagerNeeded <= 0) {
-    showResult('vipResult', '<div class="callout bad"><strong>Invalid Input</strong> Wager needed must be greater than 0.</div>', false);
+    showResult(
+      'vipResult',
+      '<div class="callout bad"><strong>Invalid input</strong> Wager needed must be greater than $0.</div>',
+      false
+    );
     return;
   }
 
-  // Calculate costs and rewards
+  if (vipHouseEdge < 0 || vipRewardRate < 0 || vipBonus < 0) {
+    showResult(
+      'vipResult',
+      '<div class="callout bad"><strong>Invalid input</strong> Values cannot be negative.</div>',
+      false
+    );
+    return;
+  }
+
   const houseEdgeCost = vipWagerNeeded * (vipHouseEdge / 100);
   const rewardsEarned = vipWagerNeeded * (vipRewardRate / 100);
   const netCost = houseEdgeCost - rewardsEarned;
   const netValue = vipBonus - netCost;
+  const roi = (netValue / vipWagerNeeded) * 100;
 
-  // Calculate ROI
-  const roi = vipWagerNeeded > 0 ? ((netValue / vipWagerNeeded) * 100) : 0;
-
-  // Recommendation
   let recommendation = 'warn';
-  let message = '';
+  let label = '⚠ Consider Carefully';
+  let message = 'The chase has a real expected cost. Only pursue it if the VIP benefits are worth that cost to you.';
 
-  if (netCost > vipBonus) {
+  if (netValue < 0) {
     recommendation = 'bad';
-    message = 'The cost to chase this level exceeds the bonus value. Not recommended.';
-  } else if (netCost > 0) {
-    recommendation = 'warn';
-    message = 'You will lose money to reach this level. Only pursue if the VIP perks are valuable.';
-  } else {
+    label = '✗ Not Recommended';
+    message = 'The estimated chase cost exceeds the entered bonus/reward value.';
+  } else if (netValue > 0) {
     recommendation = 'good';
-    message = 'Positive or break-even chase. Worth pursuing for the VIP benefits.';
+    label = '✓ Positive Estimate';
+    message = 'The entered rewards and bonus exceed the estimated house-edge cost.';
   }
 
-  // Build result HTML
   const resultHTML = `
     <div class="metric-grid">
-      <div class="metric">
-        <span>Expected House Edge Cost</span>
-        <strong>${formatCurrency(houseEdgeCost)}</strong>
-      </div>
-      <div class="metric">
-        <span>Rewards / Rakeback Earned</span>
-        <strong>${formatCurrency(rewardsEarned)}</strong>
-      </div>
-      <div class="metric">
-        <span>Net Cost to Chase</span>
-        <strong>${formatCurrency(netCost)}</strong>
-      </div>
-      <div class="metric">
-        <span>Level-Up Bonus Value</span>
-        <strong>${formatCurrency(vipBonus)}</strong>
-      </div>
-      <div class="metric">
-        <span>Net Value (Bonus - Cost)</span>
-        <strong>${formatCurrency(netValue)}</strong>
-      </div>
-      <div class="metric">
-        <span>ROI</span>
-        <strong>${formatPercent(roi)}</strong>
-      </div>
+      ${metric('Expected House Edge Cost', formatCurrency(houseEdgeCost))}
+      ${metric('Rewards / Rakeback Earned', formatCurrency(rewardsEarned))}
+      ${metric('Net Cost to Chase', formatCurrency(netCost))}
+      ${metric('Level-Up Bonus Value', formatCurrency(vipBonus))}
+      ${metric('Net Value', formatCurrency(netValue))}
+      ${metric('ROI', formatPercent(roi))}
     </div>
     <div class="callout ${recommendation}">
-      <strong>${recommendation === 'good' ? '✓ Good Chase' : recommendation === 'warn' ? '⚠ Consider Carefully' : '✗ Not Recommended'}</strong>
+      ${recommendationLabel(recommendation, label)}
       ${message}
     </div>
   `;
@@ -210,104 +204,62 @@ function calculateVip() {
   showResult('vipResult', resultHTML, true);
 }
 
-// Reset VIP form
-document.getElementById('calcVip').closest('.tool').addEventListener('reset', function() {
-  setTimeout(() => {
-    clearFormErrors(this);
-    document.getElementById('vipResult').innerHTML = '';
-  }, 0);
-});
-
 // ============================================================================
 // REDEMPTION PLANNER
 // ============================================================================
 
-document.getElementById('calcRedeem').addEventListener('click', calculateRedemption);
-
 function calculateRedemption() {
-  const redeemBalance = parseFloat(document.getElementById('redeemBalance').value) || 0;
-  const redeemMin = parseFloat(document.getElementById('redeemMin').value) || 0;
-  const dailyClaim = parseFloat(document.getElementById('dailyClaim').value) || 0;
-  const redeemEdge = parseFloat(document.getElementById('redeemEdge').value) || 0;
+  const redeemBalance = getNumber('redeemBalance');
+  const redeemMin = getNumber('redeemMin');
+  const dailyClaim = getNumber('dailyClaim');
+  const redeemEdge = getNumber('redeemEdge');
 
-  // Validation
   if (redeemMin <= 0) {
-    showResult('redeemResult', '<div class="callout bad"><strong>Invalid Input</strong> Redemption minimum must be greater than 0.</div>', false);
+    showResult(
+      'redeemResult',
+      '<div class="callout bad"><strong>Invalid input</strong> Redemption minimum must be greater than $0.</div>',
+      false
+    );
     return;
   }
 
-  // Calculate redemption timeline - fixes negative value issue
+  if (redeemBalance < 0 || dailyClaim < 0 || redeemEdge < 0) {
+    showResult(
+      'redeemResult',
+      '<div class="callout bad"><strong>Invalid input</strong> Values cannot be negative.</div>',
+      false
+    );
+    return;
+  }
+
   const neededBalance = Math.max(0, redeemMin - redeemBalance);
   const daysNeeded = neededBalance > 0 && dailyClaim > 0 ? Math.ceil(neededBalance / dailyClaim) : 0;
   const totalClaimsNeeded = neededBalance;
   const estimatedCost = totalClaimsNeeded * (redeemEdge / 100);
-
   const alreadyEligible = neededBalance === 0;
 
-  // Build result HTML
   const resultHTML = `
     <div class="metric-grid">
-      <div class="metric">
-        <span>Current Balance</span>
-        <strong>${formatCurrency(redeemBalance)}</strong>
-      </div>
-      <div class="metric">
-        <span>Redemption Minimum</span>
-        <strong>${formatCurrency(redeemMin)}</strong>
-      </div>
-      <div class="metric">
-        <span>Needed Balance</span>
-        <strong>${formatCurrency(neededBalance)}</strong>
-      </div>
-      <div class="metric">
-        <span>Days to Target</span>
-        <strong>${daysNeeded > 0 ? daysNeeded : '0'}</strong>
-      </div>
-      <div class="metric">
-        <span>Total Claims Needed</span>
-        <strong>${totalClaimsNeeded.toFixed(2)}</strong>
-      </div>
-      <div class="metric">
-        <span>Est. Clearing Cost</span>
-        <strong>${formatCurrency(estimatedCost)}</strong>
-      </div>
+      ${metric('Current Balance', formatCurrency(redeemBalance))}
+      ${metric('Redemption Minimum', formatCurrency(redeemMin))}
+      ${metric('Needed Balance', formatCurrency(neededBalance))}
+      ${metric('Days to Target', `${daysNeeded}`)}
+      ${metric('Total Claims Needed', formatCurrency(totalClaimsNeeded))}
+      ${metric('Est. Clearing Cost', formatCurrency(estimatedCost))}
     </div>
     <div class="callout ${alreadyEligible ? 'good' : 'warn'}">
       <strong>${alreadyEligible ? '✓ Already at redemption minimum' : '⚠ Timeline Estimate'}</strong>
       ${
         alreadyEligible
           ? `You are already at or above the entered redemption minimum of ${formatCurrency(redeemMin)}.`
-          : `Approximately ${daysNeeded} days to reach ${formatCurrency(redeemMin)}, with an estimated ${formatCurrency(estimatedCost)} cost from house edge.`
+          : dailyClaim > 0
+            ? `Approximately ${daysNeeded} day${daysNeeded === 1 ? '' : 's'} to reach ${formatCurrency(redeemMin)}, with an estimated ${formatCurrency(estimatedCost)} cost from house edge.`
+            : 'Enter a daily claim amount above $0 to estimate the number of days needed.'
       }
     </div>
   `;
 
   showResult('redeemResult', resultHTML, true);
-}
-
-// Reset redemption form
-document.getElementById('calcRedeem').closest('.tool').addEventListener('reset', function() {
-  setTimeout(() => {
-    clearFormErrors(this);
-    document.getElementById('redeemResult').innerHTML = '';
-  }, 0);
-});
-
-// ============================================================================
-// RESULT DISPLAY HELPER
-// ============================================================================
-
-function showResult(elementId, html, isSuccess) {
-  const resultEl = document.getElementById(elementId);
-  resultEl.innerHTML = html;
-  resultEl.classList.toggle('error', !isSuccess);
-}
-
-function clearFormErrors(form) {
-  form.querySelectorAll('.error').forEach((el) => el.classList.remove('error'));
-  form.querySelectorAll('.error-message').forEach((el) => {
-    el.textContent = '';
-  });
 }
 
 // ============================================================================
@@ -316,11 +268,12 @@ function clearFormErrors(form) {
 
 function initializeDailyTracker() {
   const today = new Date().toISOString().split('T')[0];
-  const todayKey = `dailyTracker_${today}`;
+  const todayKey = `${STORAGE_PREFIX}${today}`;
+  const checkboxes = Array.from(document.querySelectorAll('[data-daily]'));
+  const statusElement = document.getElementById('dailyStatus');
 
   let checkedItems = {};
 
-  // Load from localStorage with error handling (fixes browser storage issues)
   try {
     const savedData = localStorage.getItem(todayKey);
     checkedItems = savedData ? JSON.parse(savedData) : {};
@@ -328,48 +281,42 @@ function initializeDailyTracker() {
     checkedItems = {};
   }
 
-  // Get all checkboxes
-  const checkboxes = document.querySelectorAll('[data-daily]');
-  const statusEl = document.getElementById('dailyStatus');
+  function saveState() {
+    try {
+      localStorage.setItem(todayKey, JSON.stringify(checkedItems));
+    } catch {
+      // Storage unavailable; tracker still works until the page is refreshed.
+    }
+  }
 
-  // Restore state
+  function updateStatus() {
+    if (!statusElement) return;
+
+    const checkedCount = checkboxes.filter((checkbox) => checkbox.checked).length;
+    const totalCount = checkboxes.length;
+
+    if (checkedCount === totalCount && totalCount > 0) {
+      statusElement.className = 'callout good';
+      statusElement.innerHTML = `<strong>✓ All set for today</strong> You've checked all daily tasks for today.`;
+    } else if (checkedCount > 0) {
+      statusElement.className = 'callout warn';
+      statusElement.innerHTML = `<strong>${checkedCount}/${totalCount} complete</strong> Keep going — ${totalCount - checkedCount} left.`;
+    } else {
+      statusElement.className = 'callout';
+      statusElement.innerHTML = `<strong>Start tracking</strong> Check off tasks as you complete them today.`;
+    }
+  }
+
   checkboxes.forEach((checkbox) => {
     const key = checkbox.dataset.daily;
-    if (checkedItems[key]) {
-      checkbox.checked = true;
-    }
+    checkbox.checked = Boolean(checkedItems[key]);
 
-    // Listen for changes
     checkbox.addEventListener('change', () => {
       checkedItems[key] = checkbox.checked;
-
-      // Save to localStorage with error handling
-      try {
-        localStorage.setItem(todayKey, JSON.stringify(checkedItems));
-      } catch {
-        // Storage unavailable; tracker still works for this session.
-      }
-
+      saveState();
       updateStatus();
     });
   });
-
-  function updateStatus() {
-    const checkedCount = Object.values(checkedItems).filter(Boolean).length;
-    const totalCount = checkboxes.length;
-    const allChecked = checkedCount === totalCount;
-
-    if (allChecked) {
-      statusEl.className = 'callout good';
-      statusEl.innerHTML = `<strong>✓ All set for today!</strong> You've checked all daily tasks. Great discipline.`;
-    } else if (checkedCount > 0) {
-      statusEl.className = 'callout warn';
-      statusEl.innerHTML = `<strong>${checkedCount}/${totalCount} Complete</strong> Keep going—${totalCount - checkedCount} to go.`;
-    } else {
-      statusEl.className = 'callout';
-      statusEl.innerHTML = `<strong>Start tracking</strong> Check off tasks as you complete them today.`;
-    }
-  }
 
   updateStatus();
 }
@@ -380,6 +327,11 @@ function initializeDailyTracker() {
 
 function initializeScrollReveal() {
   const revealElements = document.querySelectorAll('.reveal');
+
+  if (!('IntersectionObserver' in window)) {
+    revealElements.forEach((element) => element.classList.add('visible'));
+    return;
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -393,7 +345,7 @@ function initializeScrollReveal() {
     { threshold: 0.1 }
   );
 
-  revealElements.forEach((el) => observer.observe(el));
+  revealElements.forEach((element) => observer.observe(element));
 }
 
 // ============================================================================
@@ -401,27 +353,26 @@ function initializeScrollReveal() {
 // ============================================================================
 
 function initializeNavigation() {
-  const navLinks = document.querySelectorAll('nav a');
-  const sections = document.querySelectorAll('section');
+  const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+
+  if (!('IntersectionObserver' in window)) return;
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          navLinks.forEach((link) => {
-            link.style.color = link.getAttribute('href') === `#${id}` ? 'var(--text)' : 'var(--soft)';
-            link.style.borderColor = link.getAttribute('href') === `#${id}` ? 'var(--line)' : 'transparent';
-          });
-        }
+        if (!entry.isIntersecting) return;
+
+        const id = entry.target.id;
+        navLinks.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
       });
     },
-    { threshold: 0.5 }
+    { threshold: 0.45 }
   );
 
   sections.forEach((section) => observer.observe(section));
-
-  // Smooth scroll behavior handled by CSS (scroll-behavior: smooth)
 }
 
 // ============================================================================
@@ -429,7 +380,16 @@ function initializeNavigation() {
 // ============================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('calcBonus')?.addEventListener('click', calculateBonus);
+  document.getElementById('calcVip')?.addEventListener('click', calculateVip);
+  document.getElementById('calcRedeem')?.addEventListener('click', calculateRedemption);
+  document.querySelector('[data-example="bonus"]')?.addEventListener('click', loadBonusExample);
+
   initializeDailyTracker();
   initializeScrollReveal();
   initializeNavigation();
+
+  calculateBonus();
+  calculateVip();
+  calculateRedemption();
 });
