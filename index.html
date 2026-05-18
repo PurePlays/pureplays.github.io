@@ -112,7 +112,26 @@
         <p>Choose a monthly goal, effort level, methods, and sites. The tool estimates realistic monthly value, time cost, hourly value, bottlenecks, and a PurePlay Score.</p>
       </div>
 
-      <div class="optimizer-layout">
+      
+      <div class="preset-plan-row" aria-label="One-click plan presets">
+        <button type="button" class="plan-preset" data-plan-preset="casual">
+          <span>Casual Daily Plan</span>
+          <strong>$100-$250/mo</strong>
+          <small>Dailies, codes, low effort</small>
+        </button>
+        <button type="button" class="plan-preset active" data-plan-preset="regular">
+          <span>Regular Grinder Plan</span>
+          <strong>$250-$500/mo</strong>
+          <small>Dailies, codes, promos, light AMOE</small>
+        </button>
+        <button type="button" class="plan-preset" data-plan-preset="heavy">
+          <span>Heavy AMOE Plan</span>
+          <strong>$500-$1,000+/mo</strong>
+          <small>AMOE, promos, full tracking</small>
+        </button>
+      </div>
+
+<div class="optimizer-layout">
         <aside class="control-panel">
           <div class="mode-tabs" role="tablist" aria-label="Optimizer mode">
             <button class="mode-tab active" type="button" data-mode="goal">Goal Mode</button>
@@ -215,6 +234,24 @@
             </div>
           </div>
 
+          <div class="recommended-setup-card" id="recommendedSetup">
+            <div>
+              <p class="panel-kicker">Recommended setup</p>
+              <h3 id="setupTitle">Build your plan</h3>
+              <p id="setupText">Run the optimizer to get the best site/method setup for your monthly target.</p>
+            </div>
+            <div id="setupButtons" class="setup-buttons"></div>
+          </div>
+
+          <div class="money-left-card" id="moneyLeftCard">
+            <div>
+              <p class="panel-kicker">Opportunity gap</p>
+              <h3 id="moneyLeftTitle">You are leaving money on the table</h3>
+              <p id="moneyLeftText">The optimizer will show what value is missing from your current setup.</p>
+            </div>
+            <div id="moneyLeftItems" class="money-left-items"></div>
+          </div>
+
           <div class="metric-grid primary-metrics">
             <article class="metric"><span>Projected monthly value</span><strong id="monthlyValue">$0</strong></article>
             <article class="metric"><span>Target gap</span><strong id="targetGap">$0</strong></article>
@@ -287,6 +324,11 @@
               <p>Turn the estimate into the exact next steps. Affiliate buttons are placed where the user is deciding what to add.</p>
             </div>
             <div id="startPlan" class="start-plan-grid"></div>
+          </div>
+
+          
+          <div class="affiliate-disclosure">
+            PurePlays may earn from some links. The rankings are based on editable value assumptions and should not be treated as guaranteed income.
           </div>
 
           <div class="breakdown-card">

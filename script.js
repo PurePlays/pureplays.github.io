@@ -680,7 +680,7 @@ function renderGapCards(total, goal, selectedSites, amoe, methods) {
     cards.push({
       title: `Add ${bestAdd.name}`,
       gain: `+${money.format(bestAdd.net)}/mo`,
-      text: `Best next site based on your selected methods. ${bestAdd.affiliate !== "#" ? "Can route through your PurePlays link." : "Affiliate link pending."}`
+      text: `Best next site based on your selected methods. ${bestAdd.affiliate !== "#" ? "Can route through your PurePlays link." : "Coming soon."}`
     });
   }
 
@@ -748,7 +748,7 @@ function renderRecommendedSites(calculatedSites) {
         <div class="gain">${money.format(site.net)}/mo</div>
         <p>Why it fits: ${methods}. Estimated time is ${num.format(site.minutes / 60)} hrs/month at current assumptions.</p>
         <div class="rec-buttons">
-          <a class="join-button" href="${hasLink ? site.affiliate : "#sites"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? "Join via PurePlays" : "Affiliate link pending"}</a>
+          <a class="join-button" href="${hasLink ? site.affiliate : "#sites"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? "Join via PurePlays" : "Coming soon"}</a>
           <a class="secondary-button" href="#sites">Adjust assumptions</a>
         </div>
       </article>
@@ -853,3 +853,318 @@ function runOptimizer(rerenderCards = true) {
   renderStartPlan(calculatedSites, total, goal, amoe, methods);
   renderRanking(calculatedSites, amoe);
 }
+
+
+/* Funnel V3: presets, recommended setup, money-left gap, daily checklist */
+
+function applyPlanPreset(preset) {
+  document.querySelectorAll(".plan-preset").forEach((button) => {
+    button.classList.toggle("active", button.dataset.planPreset === preset);
+  });
+
+  if (preset === "casual") {
+    $("goalAmount").value = 200;
+    $("effortLevel").value = "casual";
+    setMethodState({ dailies: true, codes: true, freebies: true, offers: false, vip: false, giveaways: true, amoe: false });
+    const core = new Set(["stakeus", "shuffleus", "crowncoins", "modo", "high5"]);
+    state.sites.forEach((site) => site.selected = core.has(site.id));
+  }
+
+  if (preset === "regular") {
+    $("goalAmount").value = 500;
+    $("effortLevel").value = "regular";
+    setMethodState({ dailies: true, codes: true, freebies: true, offers: true, vip: true, giveaways: true, amoe: true });
+    const core = new Set(["stakeus", "shuffleus", "chumba", "luckyland", "crowncoins"]);
+    state.sites.forEach((site) => site.selected = core.has(site.id));
+    $("amoeRequests").value = 60;
+  }
+
+  if (preset === "heavy") {
+    $("goalAmount").value = 1000;
+    $("effortLevel").value = "heavy";
+    setMethodState({ dailies: true, codes: true, freebies: true, offers: true, vip: true, giveaways: true, amoe: true });
+    state.sites.forEach((site) => site.selected = true);
+    $("amoeRequests").value = 160;
+  }
+
+  renderSiteGrid();
+  runOptimizer();
+}
+
+function setMethodState(methods) {
+  document.querySelectorAll(".method-toggle").forEach((toggle) => {
+    if (Object.prototype.hasOwnProperty.call(methods, toggle.dataset.method)) {
+      toggle.checked = methods[toggle.dataset.method];
+    }
+  });
+}
+
+function renderRecommendedSetup(total, goal, calculatedSites, amoe, methods) {
+  const title = $("setupTitle");
+  const text = $("setupText");
+  const buttons = $("setupButtons");
+  if (!title || !text || !buttons) return;
+
+  const best = affiliateReadySites(calculatedSites).slice(0, 3);
+  const bestNames = best.map((site) => site.name).join(", ") || "your selected sites";
+  const amoePhrase = methods.amoe && amoe.value > 0 ? ` plus an AMOE estimate of ${money.format(amoe.value)}/month` : "";
+
+  if (goal > 0 && total >= goal) {
+    title.textContent = `Recommended setup for ${money.format(goal)}/month`;
+    text.textContent = `Start with ${bestNames}${amoePhrase}. This setup projects about ${money.format(total)}/month at current assumptions.`;
+  } else if (goal > 0) {
+    title.textContent = `Best current setup: ${money.format(total)}/month`;
+    text.textContent = `This setup is short of the ${money.format(goal)} goal, but ${bestNames} are the strongest starting points. Use the gap section below to add more value.`;
+  } else {
+    title.textContent = "Recommended setup";
+    text.textContent = `Start with ${bestNames}.`;
+  }
+
+  buttons.innerHTML = best.slice(0, 2).map((site) => {
+    const hasLink = site.affiliate && site.affiliate !== "#";
+    return `<a href="${hasLink ? site.affiliate : "#sites"}" class="${hasLink ? "" : "pending"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? `Join ${site.name}` : `${site.name}: coming soon`}</a>`;
+  }).join("") + `<a href="#sites">Edit selected sites</a>`;
+}
+
+function renderMoneyLeft(total, goal, methods, amoe) {
+  const title = $("moneyLeftTitle");
+  const text = $("moneyLeftText");
+  const items = $("moneyLeftItems");
+  if (!title || !text || !items) return;
+
+  const gap = Math.max(0, goal - total);
+  if (goal > 0 && gap > 0) {
+    title.textContent = `You are short by about ${money.format(gap)}/month`;
+    text.textContent = "The point of the tool is to show exactly what to add next, not just throw random links at you.";
+  } else if (goal > 0) {
+    title.textContent = `You clear the target by about ${money.format(total - goal)}/month`;
+    text.textContent = "At these assumptions, the better move is starting the plan and removing low-value time sinks.";
+  } else {
+    title.textContent = "You are leaving money on the table";
+    text.textContent = "Set a target to see the gap.";
+  }
+
+  const notSelected = state.sites
+    .filter((site) => !site.selected)
+    .map((site) => calculateSite({ ...site, selected: true }, methods, effortMultiplier()))
+    .sort((a, b) => b.net - a.net)
+    .slice(0, 3);
+
+  const opportunities = [];
+
+  notSelected.forEach((site) => {
+    opportunities.push({ label: `Add ${site.name}`, value: `+${money.format(site.net)}` });
+  });
+
+  if (!methods.amoe) {
+    opportunities.push({ label: "Enable AMOE module", value: "High upside" });
+  } else {
+    const currentRequests = value("amoeRequests");
+    const extra = currentRequests > 0 ? amoe.value * 0.5 : 200;
+    opportunities.push({ label: "Increase AMOE volume", value: `~+${money.format(extra)}` });
+  }
+
+  if (!methods.offers) {
+    opportunities.push({ label: "Turn on positive-EV offer checks", value: "+variable" });
+  }
+
+  items.innerHTML = opportunities.slice(0, 4).map((item) => `
+    <div class="money-left-item">
+      <strong>${item.label}</strong>
+      <span>${item.value}</span>
+    </div>
+  `).join("");
+}
+
+function renderDailyChecklist(calculatedSites, methods, amoe) {
+  const dailySites = calculatedSites
+    .filter((site) => site.active.includes("dailies"))
+    .sort((a, b) => b.net - a.net)
+    .slice(0, 5);
+
+  const topNames = dailySites.map((site) => site.name).join(", ") || "selected sites";
+
+  const items = [
+    `Claim/check dailies on ${topNames}`,
+    methods.codes ? "Check code sources and recent social/Telegram/Discord drops" : "Codes are off for this plan",
+    methods.freebies ? "Check freebie/giveaway pages and email promos" : "Freebies are off for this plan",
+    methods.offers ? "Review deposit offers only if they pass the math" : "Deposit offers are off for this plan",
+    methods.amoe ? `Prepare/log AMOE batch. Current estimate: ${money.format(amoe.value)}/month` : "Add AMOE if the goal is not reachable"
+  ];
+
+  return `
+    <article class="daily-checklist-card">
+      <h4>Daily checklist preview</h4>
+      <ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>
+    </article>
+  `;
+}
+
+function renderStartPlan(calculatedSites, total, goal, amoe, methods) {
+  const container = $("startPlan");
+  if (!container) return;
+
+  const topAffiliateSites = affiliateReadySites(calculatedSites).slice(0, 3);
+  const joinNames = topAffiliateSites.map((site) => site.name).join(", ") || "your selected sites";
+  const dailyNames = calculatedSites
+    .filter((site) => site.active.includes("dailies"))
+    .sort((a, b) => b.net - a.net)
+    .slice(0, 4)
+    .map((site) => site.name)
+    .join(", ") || "selected daily sites";
+
+  const steps = [
+    {
+      title: "Join the recommended sites",
+      text: `Start with ${joinNames}. These are the strongest signup opportunities based on the current plan.`
+    },
+    {
+      title: "Run the daily checklist",
+      text: `Claim/check ${dailyNames}. This is the repeatable baseline value.`
+    },
+    {
+      title: "Add codes and offer checks",
+      text: "Check codes, freebie drops, email promos, Discord/Twitter posts, and only take offers that clear the math."
+    },
+    {
+      title: methods.amoe ? "Execute the AMOE batch" : "Add AMOE if short",
+      text: methods.amoe ? `Current AMOE estimate is ${money.format(amoe.value)}/month. Follow rules carefully and track approvals.` : "If the plan is short, AMOE is the highest-upside method to add."
+    }
+  ];
+
+  container.innerHTML = steps.map((step, index) => `
+    <article class="start-step">
+      <span class="step-number">${index + 1}</span>
+      <h4>${step.title}</h4>
+      <p>${step.text}</p>
+    </article>
+  `).join("") + renderDailyChecklist(calculatedSites, methods, amoe);
+}
+
+function renderRecommendedSites(calculatedSites) {
+  const container = $("recommendedSites");
+  if (!container) return;
+
+  const recommended = affiliateReadySites(calculatedSites).slice(0, 3);
+
+  if (!recommended.length) {
+    container.innerHTML = `<article class="recommended-card"><h4>No sites selected</h4><p>Select sites or use the core preset to generate recommendations.</p></article>`;
+    return;
+  }
+
+  container.innerHTML = recommended.map((site) => {
+    const hasLink = site.affiliate && site.affiliate !== "#";
+    const methods = site.active.slice(0, 3).map((key) => METHOD_LABELS[key]).join(", ") || "general value";
+    return `
+      <article class="recommended-card">
+        <div class="rec-top">
+          <div class="rec-avatar">${site.initial}</div>
+          <div>
+            <h4>${site.name}</h4>
+            <p>${site.type}</p>
+          </div>
+        </div>
+        <span class="rec-score">PurePlay Score ${Math.round(site.score)}</span>
+        <div class="gain">${money.format(site.net)}/mo</div>
+        <p>Why it fits: ${methods}. Estimated time is ${num.format(site.minutes / 60)} hrs/month at current assumptions.</p>
+        <div class="rec-buttons">
+          <a class="join-button ${hasLink ? "" : "pending"}" href="${hasLink ? site.affiliate : "#sites"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? "Join via PurePlays" : "Coming soon"}</a>
+          <a class="secondary-button" href="#sites">Adjust assumptions</a>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function renderRanking(sites, amoe) {
+  const rows = sites
+    .sort((a, b) => b.score - a.score)
+    .map((site) => {
+      const hasLink = site.affiliate && site.affiliate !== "#";
+      return `
+      <tr>
+        <td class="rank-site"><strong>${site.name}</strong><small>${site.type}</small></td>
+        <td>${site.active.length ? site.active.map((key) => `<span class="method-pill">${METHOD_LABELS[key]}</span>`).join("") : "—"}</td>
+        <td><strong>${money.format(site.net)}</strong></td>
+        <td>${num.format(site.minutes / 60)} hrs/mo</td>
+        <td><span class="score-pill">${Math.round(site.score)}</span></td>
+        <td><a class="link-button ${hasLink ? "" : "pending"}" href="${hasLink ? site.affiliate : "#sites"}" target="${hasLink ? "_blank" : "_self"}" rel="${hasLink ? "sponsored noopener noreferrer" : ""}">${hasLink ? "Join" : "Soon"}</a></td>
+      </tr>
+    `}).join("");
+
+  const amoeRow = amoe.value > 0 ? `
+    <tr>
+      <td class="rank-site"><strong>AMOE Plan</strong><small>Mail-in value estimate</small></td>
+      <td><span class="method-pill">AMOE</span></td>
+      <td><strong>${money.format(amoe.value)}</strong></td>
+      <td>${num.format(amoe.minutes / 60)} hrs/mo</td>
+      <td><span class="score-pill">${Math.round(amoe.score)}</span></td>
+      <td><a class="link-button" href="#amoe">View</a></td>
+    </tr>
+  ` : "";
+
+  $("rankingRows").innerHTML = (amoeRow + rows) || `<tr><td colspan="6">Select at least one site or enable AMOE.</td></tr>`;
+}
+
+function runOptimizer(rerenderCards = true) {
+  const methods = selectedMethods();
+  const effort = effortMultiplier();
+  const goal = value("goalAmount");
+
+  const selected = state.sites.filter((site) => site.selected);
+  const calculatedSites = selected.map((site) => calculateSite(site, methods, effort));
+  const amoe = calculateAmoe(methods);
+  const siteTotal = calculatedSites.reduce((sum, site) => sum + site.net, 0);
+  const total = siteTotal + amoe.value;
+  const totalMinutes = calculatedSites.reduce((sum, site) => sum + site.minutes, 0) + amoe.minutes;
+  const timeHours = totalMinutes / 60;
+  const hourly = timeHours > 0 ? total / timeHours : 0;
+  const dailyMinutes = totalMinutes / 30;
+  const gap = total - goal;
+  const realism = goal > 0 ? Math.min(1, total / goal) : 1;
+  const timePenalty = dailyMinutes > 60 ? 12 : dailyMinutes > 30 ? 6 : 0;
+  const score = Math.max(0, Math.min(100, Math.round((realism * 58) + Math.min(hourly, 80) * 0.32 + Math.min(selected.length * 2, 12) - timePenalty)));
+
+  const verdictTitle = $("verdictTitle");
+  const verdictText = $("verdictText");
+
+  if (total >= goal && goal > 0) {
+    verdictTitle.textContent = "Possible at these assumptions";
+    verdictText.textContent = `The plan projects about ${money.format(total)}/month, clearing your ${money.format(goal)} target. The next step is starting with the recommended sites and repeatable methods.`;
+  } else if (goal > 0 && total >= goal * 0.70) {
+    verdictTitle.textContent = "Close, but needs more value";
+    verdictText.textContent = `The plan projects about ${money.format(total)}/month, short of your ${money.format(goal)} target. Use the close-the-gap cards below to add sites, AMOE volume, or better offers.`;
+  } else if (goal > 0) {
+    verdictTitle.textContent = "Not realistic with this setup";
+    verdictText.textContent = `The plan projects about ${money.format(total)}/month against a ${money.format(goal)} target. This is where the tool should be honest: you need more sites, AMOE, or stronger offers.`;
+  } else {
+    verdictTitle.textContent = "Monthly value estimate";
+    verdictText.textContent = `The selected setup projects about ${money.format(total)}/month.`;
+  }
+
+  $("scoreValue").textContent = score;
+  $("monthlyValue").textContent = money.format(total);
+  $("targetGap").textContent = gap >= 0 ? `+${money.format(gap)}` : `-${money.format(Math.abs(gap))}`;
+  $("timeMonth").textContent = `${num.format(timeHours)} hrs`;
+  $("hourlyValue").textContent = `${money2.format(hourly)}/hr`;
+  $("dailyTime").textContent = `${num.format(dailyMinutes)} min/day`;
+  $("selectedSites").textContent = selected.length;
+
+  const scenarios = scenarioValues(total);
+  $("conservativeValue").textContent = money.format(scenarios.conservative);
+  $("realisticValue").textContent = money.format(scenarios.realistic);
+  $("aggressiveValue").textContent = money.format(scenarios.aggressive);
+
+  renderRecommendedSetup(total, goal, calculatedSites, amoe, methods);
+  renderMoneyLeft(total, goal, methods, amoe);
+  renderGapCards(total, goal, calculatedSites, amoe, methods);
+  renderRecommendedSites(calculatedSites);
+  renderBreakdown(makeBreakdown(calculatedSites, amoe), total);
+  renderActionPlan(buildActionPlan(total, goal, calculatedSites, amoe, methods, timeHours, hourly));
+  renderStartPlan(calculatedSites, total, goal, amoe, methods);
+  renderRanking(calculatedSites, amoe);
+}
+
+document.querySelectorAll(".plan-preset").forEach((button) => {
+  button.addEventListener("click", () => applyPlanPreset(button.dataset.planPreset));
+});
